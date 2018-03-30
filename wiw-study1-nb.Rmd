@@ -54,7 +54,7 @@ d %>%
 ```{r}
 library(brms)
 fit <- brm(
-  response ~ 0 + intercept + (1|workerId) + (1|trial),
+  response ~ 0 + intercept + likely_2nd + (1|workerId) + (1|trial),
   data = d,
   family = bernoulli(), # student(), #cumulative(), #bernoulli(), etc
   control = list(adapt_delta = .80),

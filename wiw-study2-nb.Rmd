@@ -16,7 +16,8 @@ d_wide <- d_raw %>%
     Check1_trial == -1, 
     Check2_trial == -2, 
     Check3_trial == 1, 
-    attn == 1
+    attn == 1,
+    !is.na(workerId)
     ) %>%
   rename(
     Corruption_trial = corruption_trial,

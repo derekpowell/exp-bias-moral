@@ -1,0 +1,104 @@
+---
+title: "Expectations bias moral evaluations"
+author: "Derek Powell and Zachary Horne"
+output: 
+  pdf_document:
+    keep_tex: TRUE
+bibliography: library.bib
+csl: apa6.csl
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+On the evening of November 13th, 2015, a terrorist attack in Paris left 130 people dead and injured over 300 more. In the aftermath, millions took to Twitter to express their shock, horror, and outrage at this tragedy under hashtags like `#parisattacks` and `#jesuisparis`. Yet, most of those mourning had little to say 15 hours earlier, when another tragic attack killed at least 43 people in Beirut. Several factors are surely at play in these different reactions  [e.g. group affiliations, @Brewer1999; construal-level theory, @Trope2010], yet one potentially fundamental factor has gone unmentioned: the fact that the Paris attack was more surprising than the attack in Beirut. In contrast to France, Lebanon had experienced dozens of terrorist bombings and attacks in recent years. Consequently, Beirut may seem to many like the sort of place where “these things happen,” whereas Paris is perceived as being stable and safe.
+
+We can see in everyday experience that people’s evaluations of events often depend on their expectations about those events. There is often disappointment when events fail to meet expectations, and there is a special thrill to having one’s expectations exceeded. Anecdotally, these forces seem to drive people’s tendencies to root for the underdog, hold surprise parties, and foreshadow bad news to ease its delivery [@Bell1985]. Indeed, laboratory studies suggest that expectations play an important role in people’s evaluations of the utility of an event. For instance, Mellers and colleagues [-@Mellers1997] found that expectations influenced affective reactions during a gambling task: Given a gamble with a 10% chance to win \$30 and 90% chance to win \$0, participants felt little disappointment with the \$0 outcome, but were considerably more excited when they won \$30. Conversely, given a gamble with a 90% chance of winning \$60 and 10% chance of winning \$0, participants were disappointed with the \$0 outcome and showed more muted enjoyment of the \$60 outcome. In fact, in gambles similar to these, Mellers and colleagues [-@Mellers1997] found that people were happier with the smaller unexpected gain than with the larger but more expected gain [also see @Shepperd2002].
+
+Just as expectations affect the utility of simple gambles, we suspect they are equally likely to shape how people react to morally harmful events, such as acts of terrorism (Waldmann Cite and Rai and Fiske cite --domain general peeps; us also). However, unlike in the context of gambles, in these contexts the effects of expectations on evaluations may have harmful consequences. When events are shocking, we predict that people will perceive them as more severe and consequently be roused to action. In contrast, when events harm victims who are generally considered to be at greater risk--the poor, sick, or those living in unstable regions of the world, we predicted that reactions may be more muted. However, prior research has yet to articulate whether these same effects emerge in the moral domain and the implications of this possibility. For instance, it is unclear if these same mechanisms can help account for the divergent reactions people have to terrorism in France and Beirut. Further, people’s moral evaluations are in fact impacted by expectations what is their source and what does that tell us about how to overcome the biases they may impose?
+
+A number of researchers have sought to develop theories of disappointment--the psychological reactions that result when experiences fail to meet expectations--and its role in evaluation and decision-making [e.g., @Bell1985; @Gul1991; @Loomes1986]. These researchers have generally argued that expectations modify people's reactions to events, so that they are jointly determined by the context-free utilities of options or events (e.g., economic utilities), and the contextually-dependent disappointment that individuals experience as a function of their expectations. Similarly, Mellers and colleagues (1997) interpreted the divergence they observed between the utility of an outcome (i.e., monetary gains or losses) and the felt experience of that outcome as a result of post-decision affect. 
+
+Each of these theories has been rigorously defined and supported within the small-world confines they were meant to capture. However, we seek to craft a more general explanation of how and why expectations influence evaluations and the range of contexts in which they should be expected to do so. Several accounts of utility evaluation, including early theories like Prospect Theory [@Kahneman1979; @Tversky1992], have emphasized the role of relative comparisons in evaluations of utility. In a similar spirit, we argue that expectations can set the reference points against which people compare future outcomes. On this view, evaluating the utility of some event consists in comparing the state of the world now that the event has occurred to the state of the world just prior to the event. Further, we assume that our knowledge of the world is uncertain, so that it is really just our (probabilistic) expectations about what has happened, what is happening, and what will happen in the future. Thus, the evaluation of an event might be driven by what is learned about the state of the world as a result of that event’s occurrence. 
+
+The account outlined above provides an information-theoretic route to understanding how expectations directly influence evaluation. A fundamental insight of Information Theory is that the information carried by an event is a function of its prior probability. This means that low probability events carry more information than high probability events [@Shannon1948]. Along similar lines, violations of expectations have long been recognized as fundamental to associative and animal learning models; a larger delta means people learn more [e.g., @Rescorla1972]. Science progresses most when new findings impugn widely-accepted theories or when a theory’s extreme predictions are validated. Likewise, people learn more about the state of the world when their expectations are violated by shocking world events as compared to when they are affirmed by less surprising events. For example, if a bombing occurs in Paris -- an unexpected location -- rather than Lebanon --a more expected location--we learn that the world is more dangerous than we had previously believed.
+
+A more formal treatment of these issues reveals the generality of these conclusions. Formally, before some binary event $x_i$ (which either occurs or does not occur), an evaluator has a mental model of the current state of affairs, S. This mental model includes expectations about potential future events and uncertainty over current and past events. Thus S represents a joint probability distribution over possible states of affairs $p(x_1, x_2, ..., x_n)$. The evaluator's subjective utility function can assign an expected utility to S--representing how positive or negatively the evaluator views the current state of affairs. The occurrence of $x_i$ brings about some new state of affairs, S', to which the evaluator can again apply her utility function. The evaluation of event  $x_i$ then consists in the comparison between these two states of affairs, those before the event (reflecting the agents' expectations), and the new state of affairs brought about by the event:
+
+$$ V(x_i) = EU(S') -EU(S) $$
+
+We let S be represented by a random vector X, whose members are any number of discrete events $x_1, x_2, ..., x_n$, where $x_i$ represents the event of interest so that $x_i$ occurs in S with some probability and occurs in S' with probability 1. That is, S represents $X$ and S' represents $X|x_i=1$. We write this as:
+
+$$
+\begin{aligned}
+V(x_i) &= EU(X|x_i) - EU(X) \\
+&= \sum_{x \in X} U(x)p(x|x_i) - \sum_{x \in X} U(x)p(x)
+\end{aligned}$$
+
+Applying the chain rule of probability and some algebra (see appendix) we eventually obtain:
+
+$$V(x_i) = \big(1 - p(x_i) \big) \sum_{x \in X} U(x)p(x|x_i)$$
+
+Thus, the value assigned to event $x_i$ is proportional to the prior probability of $x_i$. Further, this holds true regardless of the nature of the event in question and of the form of the utility function over events.
+
+In the context of our reaction to surprise parties, it might seem desirable that expectations would influence our experience of events.  Much joy is tied to the psychological marriage between surprise and evaluation. However, this basic cognitive process may have negative moral repercussions. When harms are expected, these dynamics may lead people to draw less extreme evaluations, feel less concern for victims, and be less driven to help. To test this hypothesis, we examined whether people’s evaluations of morally harmful events are affected by their expectations about those events. We asked people to compare pairs of simple events where a victim suffered an identical harm, but where the events differed in their prior probability. For each pair of events, participants were asked to judge which event was more upsetting. Two studies provided evidence for the predicted effect of expectations on moral evaluations: people tended to view unexpected negative events as more upsetting, even when the harm to victims was identical.
+
+# General Methods
+
+Here we present two preregistered studies examining the role of expectations in moral evaluations. Study 1 used a forced-choice task to test the hypothesis that people would be more upset about moral outcomes that were unexpected than expected. In Study 2, we tested of our hypothesis using a more conservative judgment task to increase the generalizability of our results. 
+
+## Materials
+
+In both studies, participants were presented with a series of trials where they read brief (one sentence) descriptions of two different events and were asked to indicate which of the two events seemed more upsetting. In “experimental” trials, the two events were highly similar, but differed in their prior probabilities: one event was more expected and one more unexpected. (The perceived likelihood of a given event was confirmed in prior norming studies). These prior expectations were manipulated by changing the context in which the events occurred. For example, participants considered the following stimulus: 
+
+* “A 30 year old man in California dies in an earthquake” [Expected]
+
+* “A 30 year old man in Oklahoma dies in an earthquake” [Unexpected]
+
+In each event, the harm to the victim is the same (here, death) but one event is more expected than the other, given the different likelihoods of earthquakes occurring in California versus Oklahoma.
+
+Each study contained between 16 experimental event-pairs that spanned a variety of different events and contexts. All experimental materials for these studies are available as supplemental online materials at [OSF LINK].
+
+Both studies included “equivalent” filler trials. In these trials, the two events differed in trivial contextual details that we did not expect would affect participants’ judgments. For example: 
+
+* “A man in Connecticut starts a house fire.” [Equally expected]
+
+* “A man in New Hampshire starts a house fire.” [Equally expected]
+
+These filler trials were meant to prevent participants from becoming explicitly aware of the structure of the experimental trials. Finally, both studies included “non-equivalent” filler trials, the two events differed substantially in the degree of harm suffered by a victim, so that one event was expected to be seen as considerably more upsetting than the other. For example: 
+
+* “An 11-year-old child sets a doll on fire” [Less severe]
+
+* “A 12-year-old child sets a cat on fire”  [More severe]
+
+These trials were included to allow participants a chance to use the extremes of the response scale and to reduce any task demands that might drive them to make artificially fine-grained distinctions between the severity of events.
+
+## Exclusions
+
+In both studies, we excluded participants who failed to incorrectly answer attention-check questions. These questions asked participants to enter a particular response to ensure that they were paying attention and reading the items as they proceeded through the study. A final question asked participants if they had paid attention and taken the study seriously, encouraging them to be honest in their replies.
+
+## Data Analysis
+
+We analyzed our data by performing Bayesian estimation using the probabilistic programming language Stan [@Carpenter2017]. We tested our predictions by computing Bayes Factors (i.e. BF01) on the intercept term of our regression model using the hypothesis function in the R package brms. Bayes Factors express the ratio of the probability of data under the null hypothesis to the probability of the data under an alternative hypothesis. Therefore, larger Bayes Factors indicate that the data are more likely under the null hypothesis (e.g., that the intercept is not different from zero) than the alternative hypothesis (e.g., that the intercept is different from zero), and vice versa. Bayes Factors can be influenced by prior choices (Gelman, Simpson, & Betancourt, 2017) so we also performed prior robustness checks to confirm that our conclusions were unchanged under different prior assumptions.
+
+# Appendix
+
+$$ \begin{aligned}
+V(x_i) &= EU(X|x_i) - EU(X) \\
+&=  \sum_{x \in X} U(x)p(x|x_i) - \sum_{x \in X} U(x)p(x) \\
+&= \sum_{x \in X} U(x)p(x|x_i) - \sum_{x \in X} U(x)p(x|x_i)p(x_i) \\
+&= \sum_{x \in X} U(x)p(x|x_i) - p(x_i)\sum_{x \in X} U(x)p(x|x_i) \\
+&= \big(1 - p(x_i) \big) \sum_{x \in X} U(x)p(x|x_i) \\
+\end{aligned}$$
+
+The first step utilizes the Law of the Unconscious Statistician, the next comes from the chain rule of probability, and the final two steps are simple algebra.
+
+# References
+
+\setlength{\parindent}{-0.25in} 
+\setlength{\leftskip}{0.125in}
+\noindent

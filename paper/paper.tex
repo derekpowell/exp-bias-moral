@@ -1,4 +1,4 @@
-\documentclass[]{article}
+\documentclass[12pt,]{article}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -83,64 +83,69 @@
     \date{}
     \predate{}\postdate{}
   
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\fancyhead[LO,LE]{PREPRINT DRAFT - PLEASE DO NOT CITE WITHOUT PERMISSION}
+\fancyfoot[CO,CE]{}
 
 \begin{document}
 \maketitle
 
 \section{Introduction}\label{introduction}
 
-On the evening of November 13th, 2015, a terrorist attack in Paris left
-130 people dead and injured over 300 more. In the aftermath, millions
-took to Twitter to express their shock, horror, and outrage at this
-tragedy under hashtags like \texttt{\#parisattacks} and
-\texttt{\#jesuisparis}. Yet, most of those mourning had little to say 15
+When we learn of tragic events--a friend's loss of a loved-one, a
+violent killing, or a terrorist attack--we are mournful, concerned,
+angry, and driven to action. But our responses to these events differ
+depending on the context. In particular, it often seems as if our
+expectations, how surprising or unsurprising the event, play an
+important role. This seems true of both the mundane--When a friend's
+loved-one passes, we often ask, ``was it sudden?''-- the dramatic--a
+murder in a sleepy town prompts a very different reaction than a similar
+crime in a major city--and even the catastrophic: acts of terrorism seem
+to evoke more outrage, horror, and concern when they occurs in peaceful
+rather than unstable regions. For instance, the 2015 Paris attacks were
+felt around the world. Yet, most of those mourning had little to say 15
 hours earlier, when another tragic attack killed at least 43 people in
-Beirut. Several factors are surely at play in these different reactions
-(construal-level theory, {\textbf{???}}; e.g.~group affiliations,
-Brewer, 1999), yet one potentially fundamental factor has gone
-unmentioned: the fact that the Paris attack was more surprising than the
-attack in Beirut. In contrast to France, Lebanon had experienced dozens
-of terrorist bombings and attacks in recent years. Consequently, Beirut
-may seem to many like the sort of place where ``these things happen,''
-whereas Paris is perceived as being stable and safe.
+Beirut (citation). Likewise, stories of the Virginia Tech massacre,
+which killed 32 people, wildly overshadowed coverage of attacks killing
+nearly 200 people in Iraq--one of the bloodiest days since the 2003
+invasion (cite). In each of these situations, the surprise elicited by
+an event appears to affect evaluations. In some contexts, harm is tragic
+and in others, ``these things happen.''
 
-We can see in everyday experience that people's evaluations of events
-often depend on their expectations about those events. There is often
-disappointment when events fail to meet expectations, and there is a
-special thrill to having one's expectations exceeded. Anecdotally, these
-forces seem to drive people's tendencies to root for the underdog, hold
-surprise parties, and foreshadow bad news to ease its delivery (Bell,
-1985). Indeed, laboratory studies suggest that expectations play an
-important role in people's evaluations of the utility of an event. For
-instance, Mellers and colleagues (1997) found that expectations
-influenced affective reactions during a gambling task: Given a gamble
-with a 10\% chance to win \$30 and 90\% chance to win \$0, participants
-felt little disappointment with the \$0 outcome, but were considerably
-more excited when they won \$30. Conversely, given a gamble with a 90\%
-chance of winning \$60 and 10\% chance of winning \$0, participants were
+Although this pattern seems so intuitive as to be obvious, there is no
+code of ethics that would justify this pattern of judgment, nor is there
+any moral psychological framework that can clearly explain it. (i think
+we could cite that kurt gray thing saying that weirdness is part of the
+response to purity violations). Outside of the domain of morality,
+however, a parallel set of everyday experiences and laboratory work
+shows that people's evaluations of events unambiguously depend on their
+expectations about those events. There is disappointment when events
+fail to meet expectations, and there is a special thrill to having one's
+expectations exceeded: we root for the underdog, hold surprise parties,
+and foreshadow bad news to ease its delivery (Bell, 1985). Indeed,
+laboratory work suggests that expectations play an important role in
+people's evaluations of the utility of an event. For instance, Mellers
+and colleagues (1997) found that expectations influenced affective
+reactions during a gambling task: Given a gamble with a 10\% chance to
+win \$30 and 90\% chance to win \$0, participants felt little
+disappointment with the \$0 outcome, but were considerably more excited
+when they won \$30. Conversely, given a gamble with a 90\% chance of
+winning \$60 and 10\% chance of winning \$0, participants were
 disappointed with the \$0 outcome and showed more muted enjoyment of the
 \$60 outcome. In fact, in gambles similar to these, Mellers and
 colleagues (1997) found that people were happier with the smaller
 unexpected gain than with the larger but more expected gain (also see
 Shepperd \& Mcnulty, 2002).
 
-Just as expectations affect the utility of simple gambles, we suspect
-they are equally likely to shape how people react to morally harmful
-events, such as acts of terrorism (Waldmann Cite and Rai and Fiske cite
---domain general peeps; us also). However, unlike in the context of
-gambles, in these contexts the effects of expectations on evaluations
-may have harmful consequences. When events are shocking, we predict that
-people will perceive them as more severe and consequently be roused to
-action. In contrast, when events harm victims who are generally
-considered to be at greater risk--the poor, sick, or those living in
-unstable regions of the world, we predicted that reactions may be more
-muted. However, prior research has yet to articulate whether these same
-effects emerge in the moral domain and the implications of this
-possibility. For instance, it is unclear if these same mechanisms can
-help account for the divergent reactions people have to terrorism in
-France and Beirut. Further, people's moral evaluations are in fact
-impacted by expectations what is their source and what does that tell us
-about how to overcome the biases they may impose?
+Expectations seem to affect people's reactions to personal gains and
+losses, but can these findings be extended to the types of moral
+situations we have highlighted thus far? That is, do expectations
+directly affect reactions to morally consequential events, as intuition
+and anecdote seem to suggest? And if so, why should expectations inform
+these reactions, and what does this say about the dependability of human
+moral judgments?
 
 A number of researchers have sought to develop theories of
 disappointment--the psychological reactions that result when experiences
@@ -232,18 +237,27 @@ over events.
 In the context of our reaction to surprise parties, it might seem
 desirable that expectations would influence our experience of events.
 Much joy is tied to the psychological marriage between surprise and
-evaluation. However, this basic cognitive process may have negative
-moral repercussions. When harms are expected, these dynamics may lead
-people to draw less extreme evaluations, feel less concern for victims,
-and be less driven to help. To test this hypothesis, we examined whether
-people's evaluations of morally harmful events are affected by their
-expectations about those events. We asked people to compare pairs of
-simple events where a victim suffered an identical harm, but where the
-events differed in their prior probability. For each pair of events,
-participants were asked to judge which event was more upsetting. Two
-studies provided evidence for the predicted effect of expectations on
-moral evaluations: people tended to view unexpected negative events as
-more upsetting, even when the harm to victims was identical.
+evaluation. Indeed, it seems that for information reasons alone,
+attending to events that tell us the most seems like an efficient way to
+navigate the world.
+
+However, the basic cognitive process we have just discussed may have
+negative moral repercussions. When harms are expected, these dynamics
+may lead people to draw less extreme evaluations, feel less concern for
+victims, and be less driven to help. To test this hypothesis, we
+examined whether people's evaluations of morally harmful events are
+affected by their expectations about those events. The
+information-theoretic account we have sketched makes only directional
+predictions--predicting that, all else equal, more surprising events
+will elicit stronger responses than less surprising events. Thus, we
+examined the effects of expectations in a comparison task, where we
+asked people to compare pairs of simple events where a victim suffered
+an identical harm, but where the events differed in their prior
+probability. For each pair of events, participants were asked to judge
+which event was more upsetting. Two studies provided evidence for the
+predicted effect of expectations on moral evaluations: people tended to
+view unexpected negative events as more upsetting, even when the harm to
+victims was identical.
 
 \section{General Methods}\label{general-methods}
 
@@ -340,6 +354,259 @@ Betancourt, 2017) so we also performed prior robustness checks to
 confirm that our conclusions were unchanged under different prior
 assumptions.
 
+\section{Study 1}\label{study-1}
+
+Study 1 examined the hypothesis that changes in the prior probability of
+an event would affect people's evaluation of that event.
+
+\subsection{Participants}\label{participants}
+
+A total of 255 participants were recruited from Amazon's Mechanical Turk
+work distribution website (mTurk). Of these, 230 passed attention checks
+and were included in the final analyses (105 male, 125 female, median
+age = 33 years old). All participants were paid \$0.60 for their
+participation.
+
+\subsection{Materials and procedure}\label{materials-and-procedure}
+
+Participants judged 16 experimental event-pairs and 10 equivalent filler
+event-pairs. The events were described in the passive voice, and
+participants were asked to judge which event seemed more upsetting. For
+example:
+
+\begin{itemize}
+\item
+  A 32 year old woman gets food poisoning after eating a hamburger at a
+  fast food restaurant. {[}Expected{]}
+\item
+  A 32 year old woman gets food poisoning after eating a hamburger at a
+  four star restaurant. {[}Unexpected{]}
+\end{itemize}
+
+On each trial, participants were presented with the event-pair stimulus
+and had to judge which outcome was more upsetting in a two-alternative
+forced choice task. The two events were labeled ``Outcome 1'' and
+``Outcome 2'' and their order was randomized.
+
+\subsection{Results and discussion}\label{results-and-discussion}
+
+We predicted that people would think that events where unexpected harm
+occurred were more upsetting than events that entail similar harm but
+were comparatively more expected. As indicated in Figure 1, people
+judged that unexpected negative events were more upsetting than expected
+events. To confirm this difference formally, we fit a Bayesian logistic
+random effects model with participants' responses as the dependent
+variable (1 = unexpected event is more upsetting; 0 = expected event is
+more upsetting) and random intercepts for item and subject, allowing us
+to generalize to items and subjects we did not test. The intercept in
+this model represents the log-odds of selecting the unexpected event as
+being more upsetting. Thus, by examining the population-level intercept,
+we can test whether participants were biased toward selecting the
+unexpected event (\(\beta\) \textgreater{} 0), the expected event
+(\(\beta\) \textless{} 0), or were unbiased (\(\beta\) = 0). Consistent
+with our hypothesis, we found that people were much more likely to think
+that unexpected events were more upsetting than events that were
+expected, Intercept = -0.647, 95\% CI {[}-0.923, -0.378{]}, BF01
+\textless{} .001. Bayes factors and the estimate of the intercept were
+similar under different prior choices.
+
+\begin{figure}
+\centering
+\includegraphics{paper_files/figure-latex/figure1-1.pdf}
+\caption{Marginal probability of choosing more likely response as more
+upsetting in Experiment 1. (DRAFT FIGURE)}
+\end{figure}
+
+Figure 1 shows participants' responses broken-down by individual items.
+Participants' bias toward selecting the unexpected event as more
+upsetting was consistent across the 16 experimental items.
+
+\section{Study 2}\label{study-2}
+
+In Study 1 we found that people's judgments of events were biased by
+their expectations about those events. When forced to choose between two
+events, participants decided that unexpected events were more upsetting
+than expected events. In Study 2, we sought to test our hypothesis using
+a more conservative method: we provided participants with a more
+expressive response scale so that if they viewed the events under
+consideration as equally harmful, their responses could reflect their
+attitude.
+
+\subsection{Participants}\label{participants-1}
+
+A total of 504 participants were recruited from Amazon's Mechanical Turk
+work distribution website (mTurk). Of these, 230 passed attention checks
+and were included in the final analyses (174 male, 199 female, median
+age = 34 years old). All participants were paid \$0.60 for their
+participation.
+
+\subsection{Materials and procedure}\label{materials-and-procedure-1}
+
+Participants judged 16 experimental event-pairs. One ``equivalent''
+filler item was changed because participants did not, in fact, view the
+two outcomes as equally upsetting. (Specifically, participants thought
+it was more upsetting to have one's right foot amputated than their left
+foot) {[}OSF LINK{]}.
+
+As in Study 1, on each trial of the study, participants were presented
+with a pair of actions labeled ``Outcome 1'' and ``Outcome 2'' and were
+asked, ``Which outcome seems more upsetting?'' However, unlike previous
+studies, in Study 2 participants made their rating on a five-point scale
+(Outcome 1 seems more upsetting, Outcome 1 seems a little more
+upsetting, neither seems more upsetting than the other, Outcome 2 seems
+a little more upsetting, Outcome 2 seems more upsetting).
+
+\subsection{Results and discussion}\label{results-and-discussion-1}
+
+\begin{figure}
+\centering
+\includegraphics{paper_files/figure-latex/figure2-1.pdf}
+\caption{Marginal expected response (1-5 scale) in Experiment 2. A
+response of 3 indicates indifference, a response below 3 indicates a
+bias to choose the less likely response as more upsetting. (DRAFT
+FIGURE)}
+\end{figure}
+
+The events participants were asked to compare were, by design, highly
+similar. Consequently, we expected that participants' would typically
+indicate that neither event seemed more upsetting. Indeed, we think that
+this response is, by most people's lights, the right answer. This was by
+far the choice participants most frequently made (see Figure 1, panel
+3). However, we also observed that when participants did perceive one
+event was more upsetting than the other, they were biased to perceive
+unexpected negative events as more upsetting than more-expected negative
+events.
+
+To examine these findings formally, we performed cumulative (ordinal)
+regression using a Bayesian random effects model with participants'
+scale responses as the dependent variable (1 to 5) and random intercepts
+for item and subject. This model produces four intercept coefficients,
+representing the cumulative log-odds of responses at each scale point or
+higher. For instance, the second coefficient represents the log-odds
+participants chose a 2 (``outcome 2 seems slightly more upsetting'') or
+lower on the scale. Similarly, the third intercept coefficient
+represents the log-odds participants chose a 3 or lower on the scale. By
+comparing the second intercept coefficient to the inverse of the third
+intercept coefficient (thereby representing the log-odds \emph{not}
+choosing a 3 or lower--i.e., choosing a 4 or 5), we can test whether
+participants were more likely to choose the expected or unexpected event
+as being more upsetting in cases where they did not choose the neither
+option. This analysis indicated that people were more likely to think
+that events that were unexpected were more upsetting than events that
+were expected, BF01 \textless{} .001 (see supplemental online materials
+for full model results) -- when participants did exhibit a bias in their
+responses about which event was more upsetting, they reliably chose the
+unexpected event was more upsetting than the expected event.
+
+\section{Discussion}\label{discussion}
+
+On the evening of November 13th, 2015, a terrorist attack in Paris left
+130 people dead and injured over 300 more. In the aftermath, millions
+took to Twitter to express their shock, horror, and outrage at this
+tragedy under hashtags like \texttt{\#parisattacks} and
+\texttt{\#jesuisparis}. Yet, most of those mourning had little to say 15
+hours earlier, when another tragic attack killed at least 43 people in
+Beirut. Several factors are surely at play in these different reactions
+(e.g.~group affiliations, Brewer, 1999; construal-level theory, Trope \&
+Liberman, 2010), yet one potentially fundamental factor has gone
+unmentioned: the fact that the Paris attack was more surprising than the
+attack in Beirut. In contrast to France, Lebanon had experienced dozens
+of terrorist bombings and attacks in recent years. Consequently, Beirut
+may seem to many like the sort of place where ``these things happen,''
+whereas Paris is perceived as being stable and safe.
+
+Consistent with this hypothesis, the results of two preregistered
+studies suggest that people view unexpected harmful events as more
+upsetting than expected harmful events. Just as people react more
+strongly to unexpected monetary gains and losses (Mellers et al., 1997),
+people similarly are more upset by unexpected moral harm than expected
+moral harm. However, unlike in the context of gambles, in these contexts
+the effects of expectations on evaluations may have harmful
+consequences. When events are shocking, people may perceive them as more
+severe and consequently be roused to action. In contrast, when events
+harm victims who are generally considered to be at greater risk--the
+poor, sick, or those living in unstable regions of the world, reactions
+are likely to be more muted.
+
+What is the source of this bias: prior judgment and decision-making
+research along with Information Theory suggests that these effects are
+unlikely to be a domain-specific quirk of moral thinking and more likely
+to be a product of information-theoretic mechanisms. The striking
+consequence of this is that it is quite likely that the bias to ignore
+expected harm exists because it allows us to efficiently navigation of
+the world around us; paying attention to events that surprise us allows
+us to learn the most about the world. But the consequences of this bias
+seems unambiguously sub-optimal.
+
+Understood in this way, the inconsistency in people's attitudes about
+otherwise similar acts of terrorism seems almost intuitive. An act of
+terrorism in a peaceful nation might be less expected because of our
+beliefs about the effectiveness of security forces, the stability of
+national relationships, and positive relationships among people groups
+in that nation. In contrast, a surprising act of terrorism casts doubt
+on our deeper understanding of the geopolitical situation, and thereby
+leads us to suspect similar acts are more likely to occur in the future.
+This could rightly increase our concern about this event.
+
+However, this bias--regardless of whether it is rooted in otherwise
+reasonable information-theoretic mechanisms--threatens to impose a
+vicious and morally pernicious cycle. For instance, people living in
+geo-politically unstable regions or in the developing world are often
+those who are most affected by terrorism, famine, and natural disasters,
+and are the very people in greatest need of assistance and concern from
+the world at-large. However, for these very reasons, it is often
+unsurprising when harm befalls people living in these circumstances.
+Stated another way, expected but nonetheless devastating events elicit
+little concern, and thus cause people to be less likely to donate time
+or money to aid victims, or to take political action. Understanding the
+mechanism that leads people to exhibit a bias where they will be least
+likely to help those in most need of attention can guide policymakers
+and psychologists to develop interventions which allow people to
+overcome this default tendency.
+
+The information-theoretic account has further implications, including
+offering a unifying explanation for related moral judgment behavior. For
+instance, the account we've discussed can elucidate why people appear to
+distinguish between acts of omission (e.g., failing to save someone's
+life) and commission (e.g., actively killing someone). Most people feel
+(Spranca, Minsk, \& Baron, 1991), and many ethicists argue (e.g., Foot,
+1967; Kagan, 1988; Kamm, 1993; Kant 1780/1965; Thomson, 1986), that
+immoral acts of commission may seem like more severe moral violations
+than are acts of omission that produce similar outcomes. Our account may
+shed light on this phenomena: when a person is in a position to be
+harmed through another's inaction, that person tends to be at greater
+risk of harm than a person who can only be harmed through direct action.
+Therefore, omission generally leads to a smaller change in moral utility
+than do acts of commission, potentially explaining its less severe moral
+implications.
+
+To consider one more example, our account may provide an explanation of
+certain types of victim blaming. Often, female victims of sexual
+harassment and assault are held partially responsible for the actions of
+their male aggressors. This is especially true if they were dressed or
+acting promiscuously, or if they willfully became intoxicated prior to
+the assault. People seemingly believe that a woman who behaves in these
+ways increases the probability that she will suffer sexual assault.
+Research by Janoff-Bullman, Timko, and Carli (1984) indicates that
+people are more likely to hold victims accountable for their own rape
+when the rape was perceived as having a greater prior probability, even
+when a victim's behaviors were the same. Not only are victims sometimes
+held accountable for their own assaults, but victim blaming also serves
+to shift blame away from the aggressor, leading some people to partially
+or completely excuse their transgressions. Although these
+counter-normative attitudes are often extrinsically motivated by
+misogyny (cite), our account may explain some aspects of this tendency.
+When people perceive a victims' actions as increasing the probability of
+their eventual assault, this affects their utility evaluations of an
+aggressor's actions: an aggressor's actions produce a smaller change in
+utility, thus warranting weaker condemnation.
+
+\section{Acknowledgements}\label{acknowledgements}
+
+We would like to acknowledge the help of Larisa Hussak, Keith Holyoak,
+Alan Fiske, Matthew Lieberman, Hongjing Lu, John Hummel, Andrei Cimpian,
+and Ellen Markman for their comments and support.
+
 \section{Appendix}\label{appendix}
 
 \[ \begin{aligned}
@@ -356,7 +623,8 @@ are simple algebra.
 
 \section{References}\label{references}
 
-\setlength{\parindent}{-0.25in} \setlength{\leftskip}{0.125in} \noindent
+\setlength{\parindent}{-0.125in} \setlength{\leftskip}{0.125in}
+\noindent
 
 \hypertarget{refs}{}
 \hypertarget{ref-Bell1985}{}
@@ -411,6 +679,11 @@ Shannon, C. E. (1948). A Mathematical Theory of Communication.
 Shepperd, J. a, \& Mcnulty, J. K. (2002). The affective consequences of
 expected and unexpected outcomes. \emph{Psychological Science},
 \emph{13}(1), 85--88. \url{http://doi.org/10.1111/1467-9280.00416}
+
+\hypertarget{ref-Trope2010}{}
+Trope, Y., \& Liberman, N. (2010). Construal-level theory of
+psychological distance. \emph{Psychological Review}, \emph{117}(2),
+440--63. \url{http://doi.org/10.1037/a0018963}
 
 \hypertarget{ref-Tversky1992}{}
 Tversky, A., \& Kahneman, D. (1992). Advances in prospect theory:

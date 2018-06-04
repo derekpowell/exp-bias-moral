@@ -193,7 +193,8 @@ bf_exp2 <- hypothesis(fit_exp2, "Intercept[2] = -Intercept[3]")
 ```
 
 ```{r make figures, include=FALSE}
-# plt <- plot(marginal_effects(fit_exp1))
+fig1 <- plot(marginal_effects(fit_exp1, "trial"))
+fig2 <- plot(marginal_effects(fit_exp2, "trial"))
 ```
 
 # Introduction
@@ -294,7 +295,11 @@ We predicted that people would think that events where unexpected harm occurred 
 
 ```{r figure1, echo=FALSE, fig.cap="Marginal probability of choosing more likely response as more upsetting in Experiment 1. (DRAFT FIGURE)"}
 
-plot(marginal_effects(fit_exp1, "trial"))
+fig1$trial +
+  coord_cartesian(ylim=c(0,1)) +
+  geom_hline(yintercept = .5, linetype = "dashed") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 Figure 1 shows participants' responses broken-down by individual items. Participants' bias toward selecting the unexpected event as more upsetting was consistent across the 16 experimental items.
@@ -316,8 +321,11 @@ As in Study 1, on each trial of the study, participants were presented with a pa
 ## Results and discussion
 
 ```{r figure2, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Marginal expected response (1-5 scale) in Experiment 2. A response of 3 indicates indifference, a response below 3 indicates a bias to choose the less likely response as more upsetting. (DRAFT FIGURE)"}
-
-plot(marginal_effects(fit_exp2, "trial"))
+fig2$trial +
+  coord_cartesian(ylim=c(2.25,3.25)) +
+  geom_hline(yintercept = 3, linetype = "dashed") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
 The events participants were asked to compare were, by design, highly similar. Consequently, we expected that participants' would typically indicate that neither event seemed more upsetting. Indeed, we think that this response is, by most people’s lights, the right answer. This was by far the choice participants most frequently made (see Figure 1, panel 3). However, we also observed that when participants did perceive one event was more upsetting than the other, they were biased to perceive unexpected negative events as more upsetting than more-expected negative events. 

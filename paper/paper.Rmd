@@ -1,18 +1,68 @@
 ---
-title: "Expectations bias moral evaluations"
-author: "Derek Powell and Zachary Horne"
-output: 
-  pdf_document:
-    keep_tex: TRUE
-bibliography: library.bib
-csl: apa6.csl
-fontsize: 12pt
-header-includes:
-    - \usepackage{fancyhdr}
-    - \pagestyle{fancy}
-    - \fancyhead{}
-    - \fancyhead[LO,LE]{PREPRINT DRAFT - PLEASE DO NOT CITE WITHOUT PERMISSION}
-    - \fancyfoot[CO,CE]{}
+title: Expectations bias moral evaluations
+
+# Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
+author:
+  - name: Derek Powell
+    affiliation: a,1
+  - name: Zachary Horne
+    affiliation: b
+address:
+  - code: a
+    address: Stanford University, Department of Psychology, 450 Serra Mall, Stanford, CA, 94305
+  - code: b
+    address: Arizona State University, School of Social and Behavioral Sciences, 13591 N 47th Ave, Phoenix, AZ 85051
+
+corresponding_author:
+  - code: 1
+    text: "To whom correspondence should be addressed. E-mail: derekpowell@stanford.edu"
+
+# For footer text
+lead_author_surname: Powell
+
+## Remove this if not required - talk to zach 
+# equal_authors:
+#   - code: 0
+#     text: 
+
+
+author_contributions: |
+  Both authors jointly conceived of the project and theory, designed and conducted experiments, and analyzed results. D.P. developed the formal aspects of the theory. 
+
+## Remove this if not required
+conflict_of_interest: |
+  The authors declare no conflicts of interest.
+
+abstract: |
+ When we learn of tragic events--a violent killing or a terrorist attack--we are mournful and often driven to action. But our responses to these events can differ substantially depending on the context of the event. When tragedy takes us by surprise, we are shocked and outraged, but when it strikes in unstable regions or rough neighborhoods, we are often resigned to feel that “these things happen.” Here we explain the role that expectations seem to play in moral evaluation by modeling evaluations as the comparison of the state of the world before and after an event. According to this model, expectations influence evaluations through information-theoretic principles: less expected events do more to inform us about the state of the world than do more expected events. Consistent with this theory, in two preregistered studies we found that people’s judgments of morally significant events were affected by the prior probability of that event, so that people were more upset about an event that was unexpected (e.g., a robbery at a clothing store) than an event that was more more probable (e.g., a robbery at a convenience store). This bias threatens to impose a pernicious cycle: People living in poverty, geo-politically unstable regions, and other dangerous circumstances have the greatest need for assistance and concern. However, for these very reasons, it is often unsurprising when they are harmed. Consequently, the influence of expectations on moral evaluations threatens to reduce observer's concern for those people who are most in need.
+
+
+
+significance: |
+  People living in geo-politically unstable regions or in the developing world are often those who are most affected by terrorism, famine, and natural disasters, and thus are the very people in greatest need of assistance and concern from the world at-large. However, for these very reasons, it is often unsurprising when harm befalls them. Two experiments confirm this intuition: we found that people's expectations bias their reactions to morally-significant events--people are more upset by surprising harms than more expected harms. This bias threatens to reduce observer's concern for victims most in need, making people less likely to donate time or money to aid victims, or to take political action to prevent further harms.
+
+
+
+acknowledgements: |
+  We would like to acknowledge the help of Larisa Hussak, Keith Holyoak, Alan Fiske, Hongjing Lu, John Hummel, Andrei Cimpian, and Ellen Markman for their comments and support.
+
+keywords:
+  - evaluation
+  - moral judgment
+  - information theory
+  # - optional
+  # - optional
+
+## must be one of: pnasresearcharticle (usual two-column layout), pnasmathematics (one column layout), or pnasinvited (invited submissions only)
+pnas_type: pnasresearcharticle
+
+bibliography: wiw-biblio.bib
+csl: pnas.csl
+
+## change to true to add optional line numbering
+lineno: TRUE
+
+output: rticles::pnas_article
 ---
 
 ```{r setup, include=FALSE}
@@ -27,6 +77,7 @@ library(tidyverse)
 d_raw <- read.csv("../data/WIW+Judgment+Task+Preregistered_March+30%2C+2018_11.17.csv")
 
 d_wide <- d_raw %>%
+  filter(DistributionChannel=="anonymous") %>%
   rename(duration = Duration..in.seconds.) %>%
   select(workerId, age, sex, attn, duration, contains("_trial"), -contains("_trial_")) %>%
   filter(Check_trial == 0, attn == 1) %>%
@@ -54,11 +105,14 @@ d_tidy <- d_wide %>%
 
 d <- d_tidy %>%
   filter(trial_type == "experimental", trial != "Check_trial") %>%
-  mutate(response = ifelse(likely_2nd==1, (1-response), response))
+  mutate(response = ifelse(likely_2nd==1, (1-response), response)) %>%
+  mutate(response = abs(response-1)) %>%
+  mutate(trial = gsub("_trial","",trial))
 
 d2_raw <- read.csv("../data/WIW+Judgment+Task+Preregistered+-+Likert_April+20%2C+2018_17.08.csv")
 
 d2_wide <- d2_raw %>%
+  filter(DistributionChannel=="anonymous") %>%
   rename(duration = Duration..in.seconds.) %>%
   select(workerId, age, sex, attn, duration, contains("_trial"), -contains("_trial_")) %>%
   filter(
@@ -99,7 +153,10 @@ d2_tidy <- d2_wide %>%
 
 d2 <- d2_tidy %>%
   filter(trial_type == "experimental") %>%
-  mutate(response = ifelse(likely_2nd==1, response*-1, response))
+  mutate(response = ifelse(likely_2nd==1, response*-1, response)) %>%
+  mutate(response = -1*response) %>%
+  mutate(response = response + 3) %>%
+  mutate(trial = gsub("_trial","",trial))
 ```
 
 ```{r compute descriptives, include=FALSE}
@@ -143,13 +200,14 @@ fit_exp1 <- cbrm(
   prior = prior(normal(0,3), class="b"),
   control = list(adapt_delta = .80),
   cores = parallel::detectCores(),
+  sample_prior = TRUE,
   iter = 2000,
   cached_file = "fit_exp1.rds"
   )
 
 fit_exp2 <- cbrm(
   response ~ trial + (1|workerId), # another model adds likely_2nd
-  data = d2 %>% mutate(response = response + 3),
+  data = d2,
   family = cumulative(),
   prior = prior(normal(0,3), class="Intercept"),
   control = list(adapt_delta = .80),
@@ -157,6 +215,30 @@ fit_exp2 <- cbrm(
   sample_prior = TRUE,
   iter = 2000,
   cached_file = "fit_exp2.rds"
+  )
+
+fit_exp1rand <- cbrm(
+  response ~ 0 + intercept + (1|trial) + (1|workerId), # another model adds likely_2nd
+  data = d,
+  family = bernoulli(),
+  prior = prior(normal(0,3), class="b"),
+  control = list(adapt_delta = .80),
+  sample_prior = TRUE,
+  cores = parallel::detectCores(),
+  iter = 2000,
+  cached_file = "fit_exp1rand.rds"
+  )
+
+fit_exp2rand <- cbrm(
+  response ~ (1|trial) + (1|workerId), # another model adds likely_2nd
+  data = d2,
+  family = cumulative(),
+  prior = prior(normal(0,3), class="Intercept"),
+  control = list(adapt_delta = .80),
+  cores = parallel::detectCores(),
+  sample_prior = TRUE,
+  iter = 2000,
+  cached_file = "fit_exp2rand.rds"
   )
 ```
 
@@ -179,194 +261,289 @@ print_bf <- function(hypothesis) {
   }
 }
 
-coefs_exp1 <- broom::tidy(fit_exp1) %>%
+coefs_exp1 <- broom::tidy(fit_exp1rand) %>%
   filter(term=="b_intercept")
 
 # coefs_exp2 <- broom::tidy(fit_exp2) %>%
 #   filter(term=="b_intercept")
 
-bf_exp1 <- hypothesis(fit_exp1, "intercept = 0")
+bf_exp1 <- hypothesis(fit_exp1rand, "intercept = 0")
 # bf_exp1 <- h1$hypothesis$Evid.Ratio
 
-bf_exp2 <- hypothesis(fit_exp2, "Intercept[2] = -Intercept[3]")
+bf_exp2 <- hypothesis(fit_exp2rand, "-Intercept[2] = Intercept[3]")
 # bf_exp2 <- h2$hypothesis$Evid.Ratio
 ```
 
 ```{r make figures, include=FALSE}
 fig1 <- plot(marginal_effects(fit_exp1, "trial"))
-fig2 <- plot(marginal_effects(fit_exp2, "trial"))
+fig_exp1 <- fig1$trial$data %>%
+  ggplot() +
+  aes(x = reorder(trial, -estimate__), y = estimate__, ymin = lower__, ymax = upper__) +
+  geom_errorbar(width=.25) +
+  geom_point(shape=17, size = 2) +
+  coord_cartesian(ylim=c(0,1)) +
+  geom_hline(yintercept = .5, linetype = "dashed", color = "grey") +
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    aspect.ratio = .75,
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = .7)
+    ) +
+  labs(
+    x = "Trial",
+    y = "Probability of judging less\nexpected more upsetting"
+  ) 
+# library(gridExtra)
+# grid.arrange(ggplotGrob(fig_exp1))
+
+ggsave("fig1.eps",fig_exp1, height=8.7, width=8.7, unit="cm")
 ```
 
-# Introduction
+```{r fig2, include=FALSE}
 
-When we learn of tragic events--a friend's loss of a loved-one, a violent killing, or a terrorist attack--we are mournful, concerned, angry, and driven to action. But our responses to these events differ depending on the context. In particular, it often seems as if our expectations, how surprising or unsurprising the event, play an important role. This seems true of both the mundane--When a friend's loved-one passes, we often ask, "was it sudden?"-- the dramatic--a murder in a sleepy town prompts a very different reaction than a similar crime in a major city--and even the catastrophic: acts of terrorism seem to evoke more outrage, horror, and concern when they occurs in peaceful rather than unstable regions. For instance, the 2015 Paris attacks were felt around the world. Yet, most of those mourning had little to say 15 hours earlier, when another tragic attack killed at least 43 people in Beirut (citation). Likewise, stories of the Virginia Tech massacre, which killed 32 people, wildly overshadowed coverage of attacks killing nearly 200 people in Iraq--one of the bloodiest days since the 2003 invasion (cite). In each of these situations, the surprise elicited by an event appears to affect evaluations. In some contexts, harm is tragic and in others, “these things happen.” 
+fig2_cont <- marginal_effects(fit_exp2, "trial", plot=FALSE)
+fig2 <- plot(marginal_effects(fit_exp2, "trial", ordinal=TRUE))
 
-Although this pattern seems so intuitive as to be obvious, there is no code of ethics that would justify this pattern of judgment, nor is there any moral psychological framework that can clearly explain it. (i think we could cite that kurt gray thing saying that weirdness is part of the response to purity violations). Outside of the domain of morality, however, a parallel set of everyday experiences and laboratory work shows that people’s evaluations of events unambiguously depend on their expectations about those events. There is disappointment when events fail to meet expectations, and there is a special thrill to having one’s expectations exceeded: we root for the underdog, hold surprise parties, and foreshadow bad news to ease its delivery [@Bell1985]. Indeed, laboratory work suggests that expectations play an important role in people’s evaluations of the utility of an event. For instance, Mellers and colleagues [-@Mellers1997] found that expectations influenced affective reactions during a gambling task: Given a gamble with a 10% chance to win \$30 and 90% chance to win \$0, participants felt little disappointment with the \$0 outcome, but were considerably more excited when they won \$30. Conversely, given a gamble with a 90% chance of winning \$60 and 10% chance of winning \$0, participants were disappointed with the \$0 outcome and showed more muted enjoyment of the \$60 outcome. In fact, in gambles similar to these, Mellers and colleagues [-@Mellers1997] found that people were happier with the smaller unexpected gain than with the larger but more expected gain [also see @Shepperd2002].
+plt_cont <- fig2_cont$trial %>%
+  ggplot() +
+  aes(x = reorder(trial, -estimate__), y = estimate__, ymin = lower__, ymax = upper__) +
+  geom_errorbar(width=0) +
+  geom_point(shape=17, size = 1) +
+  coord_cartesian(ylim=c(2,4)) +
+  geom_hline(yintercept = 3, linetype = "dashed", color = "grey") +
+  theme_bw() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    aspect.ratio = 10/16,
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = .7)
+  ) +
+  labs(
+    x = "Trial",
+    y = '"Upsetting" Judgments'
+  ) 
 
-Expectations seem to affect people's reactions to personal gains and losses, but can these findings be extended to the types of moral situations we have highlighted thus far? That is, do expectations directly affect reactions to morally consequential events, as intuition and anecdote seem to suggest? And if so, why should expectations inform these reactions, and what does this say about the dependability of human moral judgments?
+plt_heatmap <- fig2$trial$data %>%
+  left_join(
+    fig2_cont$trial %>% 
+              rename(mean_estimate = estimate__) %>%
+              select(trial, mean_estimate)
+            , by = "trial"
+    ) %>%
+  ggplot(aes(y = cats__, x = reorder(trial, -mean_estimate), fill = estimate__)) +
+  geom_tile(color="white") + 
+  scale_fill_viridis_c(
+    option="B", 
+    limits=c(0,1), 
+    breaks = c(0, .25, .5, .75, 1), 
+    labels= c(0, .25, .5, .75, 1),
+    guide = guide_colorbar(
+      title.position="top", 
+      barheight = unit(.5, "cm")
+      )
+    ) +
+  theme_minimal() +
+  theme(
+    panel.grid.major = element_blank(),
+    panel.grid.minor = element_blank(),
+    # aspect.ratio = 1,
+    legend.position = "top",
+    legend.key.width = unit(.75,"cm"),
+    axis.text.x = element_text(angle = 45, hjust = 1, vjust = .7)
+  ) +
+  labs(
+    x = "Trial",
+    y = "Response",
+    fill = "Probability"
+  ) +
+  coord_fixed(ratio=1)
 
-A number of researchers have sought to develop theories of disappointment--the psychological reactions that result when experiences fail to meet expectations--and its role in evaluation and decision-making [e.g., @Bell1985; @Gul1991; @Loomes1986]. These researchers have generally argued that expectations modify people's reactions to events, so that they are jointly determined by the context-free utilities of options or events (e.g., economic utilities), and the contextually-dependent disappointment that individuals experience as a function of their expectations. Similarly, Mellers and colleagues (1997) interpreted the divergence they observed between the utility of an outcome (i.e., monetary gains or losses) and the felt experience of that outcome as a result of post-decision affect. 
+library(gtable)
+g2 <- ggplotGrob(plt_cont + theme(
+  axis.title.y = element_text(margin = margin(t=0,b=.5,l=0,r=.25,unit="cm")) # this is a kludge to get shared axis
+))
+g3 <- ggplotGrob(plt_heatmap + theme(
+  axis.title.x = element_blank(),
+  axis.title.y = element_blank(),
+  axis.text.x = element_blank()
+  ))
 
-Each of these theories has been rigorously defined and supported within the small-world confines they were meant to capture. However, we seek to craft a more general explanation of how and why expectations influence evaluations and the range of contexts in which they should be expected to do so. Several accounts of utility evaluation, including early theories like Prospect Theory [@Kahneman1979; @Tversky1992], have emphasized the role of relative comparisons in evaluations of utility. In a similar spirit, we argue that expectations can set the reference points against which people compare future outcomes. On this view, evaluating the utility of some event consists in comparing the state of the world now that the event has occurred to the state of the world just prior to the event. Further, we assume that our knowledge of the world is uncertain, so that it is really just our (probabilistic) expectations about what has happened, what is happening, and what will happen in the future. Thus, the evaluation of an event might be driven by what is learned about the state of the world as a result of that event’s occurrence. 
+g <- rbind(g3, g2, size = "last")
+# grid.arrange(g)
 
-The account outlined above provides an information-theoretic route to understanding how expectations directly influence evaluation. A fundamental insight of Information Theory is that the information carried by an event is a function of its prior probability. This means that low probability events carry more information than high probability events [@Shannon1948]. Along similar lines, violations of expectations have long been recognized as fundamental to associative and animal learning models; a larger delta means people learn more [e.g., @Rescorla1972]. Science progresses most when new findings impugn widely-accepted theories or when a theory’s extreme predictions are validated. Likewise, people learn more about the state of the world when their expectations are violated by shocking world events as compared to when they are affirmed by less surprising events. For example, if a bombing occurs in Paris -- an unexpected location -- rather than Lebanon --a more expected location--we learn that the world is more dangerous than we had previously believed.
+library(gridExtra)
 
-A more formal treatment of these issues reveals the generality of these conclusions. Formally, before some binary event $x_i$ (which either occurs or does not occur), an evaluator has a mental model of the current state of affairs, S. This mental model includes expectations about potential future events and uncertainty over current and past events. Thus S represents a joint probability distribution over possible states of affairs $p(x_1, x_2, ..., x_n)$. The evaluator's subjective utility function can assign an expected utility to S--representing how positive or negatively the evaluator views the current state of affairs. The occurrence of $x_i$ brings about some new state of affairs, S', to which the evaluator can again apply her utility function. The evaluation of event  $x_i$ then consists in the comparison between these two states of affairs, those before the event (reflecting the agents' expectations), and the new state of affairs brought about by the event:
+ggsave("fig2.eps", grid.arrange(g), height=11.4, width=8.7, units = "cm")
+```
 
-$$ V(x_i) = EU(S') -EU(S) $$
+When we learn of tragic events--a friend's loss of a loved-one, a violent killing, or a terrorist attack--we are mournful, concerned, angry, and driven to action. But our responses to these events differ depending on the context [e.g., @Trope2010]. In particular, our expectations play an important role in our reactions to events. This seems true of both the mundane--when a friend's loved-one passes, we often ask, "was it sudden?"--the dramatic--a murder in a sleepy town prompts a very different reaction than a similar crime in a major city--and even the catastrophic: acts of terrorism seem to evoke more outrage, horror, and concern when they occurs in peaceful rather than unstable regions. For instance, the 2015 Paris attacks were felt around the world. Yet, most of those mourning had little to say 15 hours earlier, when another tragic attack killed at least 43 people in Beirut [@Graham2015]. Likewise, stories of the Virginia Tech massacre, which killed 32 people, wildly overshadowed coverage of attacks killing nearly 200 people in Iraq--one of the bloodiest days since the 2003 invasion [@Greenslade2007]. In each of these situations, the surprise elicited by an event appears to affect people’s reactions to the event. In some contexts, harm is tragic and in others, “these things happen.” 
 
-We let S be represented by a random vector X, whose members are any number of discrete events $x_1, x_2, ..., x_n$, where $x_i$ represents the event of interest so that $x_i$ occurs in S with some probability and occurs in S' with probability 1. That is, S represents $X$ and S' represents $X|x_i=1$. We write this as:
+Although this pattern seems so intuitive as to be obvious, no reasonable code of ethics would justify this pattern of judgment, nor do any moral psychological frameworks explicate the role of expectations in moral evaluations. Outside of the domain of morality, however, everyday experiences and controlled experiments show that people’s evaluations of events unambiguously depend on their expectations about those events. There is a special thrill to having one’s expectations exceeded and disappointment when events fail to meet expectations: we root for the underdog, hold surprise parties, and foreshadow bad news to ease its delivery [@Bell1985]. Indeed, in a controlled study, Mellers and colleagues [-@Mellers1997] found that expectations influenced affective reactions during a gambling task: Given a gamble with a 10% chance to win \$30 and 90% chance to win \$0, participants felt little disappointment with the \$0 outcome, but were considerably more excited when they won \$30. Conversely, given a gamble with a 90% chance of winning \$60 and 10% chance of winning \$0, participants were disappointed with the \$0 outcome and showed more muted enjoyment of the \$60 outcome. In fact, in gambles similar to these, people were happier with the smaller unexpected gain than with the larger but more expected gain [also see @Shepperd2002]. 
 
-$$
-\begin{aligned}
-V(x_i) &= EU(X|x_i) - EU(X) \\
-&= \sum_{x \in X} U(x)p(x|x_i) - \sum_{x \in X} U(x)p(x)
-\end{aligned}$$
+Applied to moral issues, the influences of expectations on evaluation would be a dangerous bias. Tragedies are tragic, whether expected or not, and failure to recognize that could lead to tacit endorsement of the pain and suffering of others wherever pain and suffering are the status quo. Do expectations directly bias reactions to morally consequential events, as intuition and anecdote seem to suggest? To demonstrate the plausibility of this suggestion, we develop a theoretical account of how expectations influence evaluations, not as a strange quirk or uniquely human bias, but instead as a fundamental component of how people evaluate events. 
 
-Applying the chain rule of probability and some algebra (see appendix) we eventually obtain:
+Most events of consequence consist of changes--a transition from one state to another. For this reason, we construe event evaluation as a comparison between the states of the world before and after the event. Comparison plays a crucial role in many theories of decision-making, and especially in theories aimed at explaining the role of expectations in evaluation  [e.g., @Bell1985; @Gul1991; @Loomes1986; @Mellers1997]. For instance, in Prospect Theory [@Kahneman1979; @Tversky1992], the utility of a prospect is evaluated by comparison to a current reference point. Our proposal is similar: we argue that expectations can set the reference points against which people compare future outcomes, so that assigning value to an event consists in comparing the state of the world following the event to the state of the world just prior to the event. As knowledge of the world is uncertain, our understanding of these states is probabilistic--that is, our model for the state of the world is just our expectations about what has happened, what is happening, and what will happen in the future. One direct implication of this proposal is that the evaluation of an event is linked to what is learned about the world as a result of that event’s occurrence. That is, we evaluate events positively or negatively to the extent that they inform our understanding of the world in positive or negative ways.
 
-$$V(x_i) = \big(1 - p(x_i) \big) \sum_{x \in X} U(x)p(x|x_i)$$
+This account thereby provides an information-theoretic route to understanding how expectations directly influence evaluation. A fundamental insight of Information Theory is that the information carried by an event is a function of its prior probability; low probability events carry more information than high probability events [@Shannon1948]. We propose that people learn more about the state of the world when their expectations are violated by shocking world events as compared to when they are affirmed by less surprising events. For example, if a bombing occurs in Paris--a less expected location--rather than Lebanon--a more expected location--we learn that the world is more dangerous than we had previously believed. This suggestion is novel in the moral domain, but these points are widely accepted elsewhere. For instance, expectations have long been recognized as fundamental to models of human and animal learning [e.g., @Rescorla1972]. Similarly, science progresses most when new findings impugn widely-accepted theories or when a theory’s extreme predictions are validated.
 
-Thus, the value assigned to event $x_i$ is proportional to the prior probability of $x_i$. Further, this holds true regardless of the nature of the event in question and of the form of the utility function over events.
+A more formal treatment of this theory establishes the potential for its generality across domains. Let the state of the world prior to some event be represented by a random variable, $X$. We'll assume $X$ is discrete, and that every realization $x$ represents some potential specific state of the world in all relevant aspects under consideration. An agent has some utility function $u$, that applies over the different realizations of $X$. Thus the expected utility of the present state of the world is:
 
-In the context of our reaction to surprise parties, it might seem desirable that expectations would influence our experience of events.  Much joy is tied to the psychological marriage between surprise and evaluation. Indeed, it seems that for information reasons alone, attending to events that tell us the most seems like an efficient way to navigate the world. 
+\begin{equation}
+E_X[u(X)] = \sum_x u(x)p(x)
+\end{equation}
 
-However, the basic cognitive process we have just discussed may have negative moral repercussions. When harms are expected, these dynamics may lead people to draw less extreme evaluations, feel less concern for victims, and be less driven to help. To test this hypothesis, we examined whether people’s evaluations of morally harmful events are affected by their expectations about those events. The information-theoretic account we have sketched makes only directional predictions--predicting that, all else equal, more surprising events will elicit stronger responses than less surprising events. Thus, we examined the effects of expectations in a comparison task, where we asked people to compare pairs of simple events where a victim suffered an identical harm, but where the events differed in their prior probability. For each pair of events, participants were asked to judge which event was more upsetting. Two studies provided evidence for the predicted effect of expectations on moral evaluations: people tended to view unexpected negative events as more upsetting, even when the harm to victims was identical.
+When we learn an event has occurred, we can represent this as an observation of a second, binary random variable, $S$. We can think of $S$ as a "signalling event" that informs us about about $X$ [following the formalism deployed by @Arrow1996]. That is, we assume there is a dependency between $S$ and $X$, so that observing $S$ informs us about the state of the world, $X$. For instance, reading a news report of a terror attack in Brussels informs us about the state of the world, telling us about what realizations of $X$ are no longer possible (e.g., any wherein it was a peaceful day in Brussels) and which are more or less likely. Conditioned on $S$, the expected utility of the world is:
 
-# General Methods
+\begin{equation}
+E_{X|S}[u(X)] = \sum_x u(x)p(x|s)
+\end{equation}
 
-Here we present two preregistered studies examining the role of expectations in moral evaluations. Study 1 used a forced-choice task to test the hypothesis that people would be more upset about moral outcomes that were unexpected than expected. In Study 2, we tested of our hypothesis using a more conservative judgment task to increase the generalizability of our results. 
+Given our construal of event evaluation as the comparison between states of the world following and prior to the event, we define the value assigned to the signalling event, $V(S)$, as:
 
-## Materials
+\begin{equation}
+V(S) = E_{X|S}[u(X)] - E_X[u(X)]
+\end{equation}
 
-In both studies, participants were presented with a series of trials where they read brief (one sentence) descriptions of two different events and were asked to indicate which of the two events seemed more upsetting. In “experimental” trials, the two events were highly similar, but differed in their prior probabilities: one event was more expected and one more unexpected. (The perceived likelihood of a given event was confirmed in prior norming studies). These prior expectations were manipulated by changing the context in which the events occurred. For example, participants considered the following stimulus: 
+From this it can be shown that the value assigned to event $S$ is proportional to its prior probability (see Theoretical Formalization). Specifically, it is the difference in the expected utility under different values of $S$, weighted by the inverse of the prior probability of $S$.. [^1]
+
+\begin{equation}
+V(s=1)=(1-p(s=1))\sum_x u(x)p(x|s=1) - u(x)p(x|s=0)
+\end{equation}
+
+This conclusion does not depend on the nature of the event in question nor on the utility function over events, but instead holds generally wherever we conceive of evaluation as a holistic comparison between uncertain states of the world. Consequently, this account predicts expectations will equally affect reactions to gambles with clearly specified values and probabilities [@Mellers1997] and real-world events with ill-defined values and where reasoners' expectations are defined by their existing beliefs and world knowledge. 
+
+Given the potentially fundamental role expectations play in event evaluation, and the potentially serious moral biases that may result, we sought to test empirically whether people’s evaluations of morally harmful events are affected by their expectations about those events. We conducted two preregistered studies examining the role of expectations in moral evaluations. In both studies, participants were presented with a series of trials where they read brief descriptions of two different events and were asked to indicate which of the two events seemed more upsetting. In these trials, the two events were highly similar, but were manipulated so that they differed in their perceived prior probabilities: one event was more expected and one more unexpected. 
+
+The design of these studies was chosen with special consideration to two theoretical points. First, the information-theoretic account we have described makes a solely directional prediction--all else being equal, more surprising events will elicit stronger reactions than less surprising events. Asking participants to compare two similar events allowed us to test this directional prediction. Second, it is the informativeness of events, determined by one's prior expectations of the event, that we predict will shape evaluations. Thus, reasoners should not have to be induced to hold expectations experimentally [as in experiments by @Mellers1997], but instead their own prior beliefs will be sufficient to shape their expectations and affect their evaluations. For this reason, we manipulated the prior probability of events by describing two otherwise identical events occurring in different contexts. This allowed us to test the role of expectations based on world knowledge, as well as providing a more naturalistic set of items.
+
+![Probability with which participants chose the less expected event as more upsetting across trials in Study 1. As predicted, participants exhibited a robust bias toward choosing the less expected event as more upsetting across all items. Error bars represent 95% credible intervals calculated from the hierarchical logistic regression model. See Supporting Information for full description of items. <span data-label="fig:fig1"></span>](fig1.eps)
+
+Consistent with our predictions, manipulating expectations consistently shaped evaluations across a range of morally-significant events. We found that people viewed unexpected harmful events as more upsetting than expected harmful events, even when the harm a victim suffered was the same. For instance, people judged that a robbery at a clothing store (unexpected) was more upsetting than a robbery at a convenience store (expected). Furthermore, these differences were large, systematic, and robust. Although there was variability in the situations that elicited the largest differences, our statistical approach treated trial as a random effect (see Methods and Results), allowing us to generalize conclusions to items we did not test [@Judd2012].
+
+![Participants’ responses by item in Study 2. Upper: heatmap plot displaying probability of choosing each response on the 1 to 5 scale across items. Lower: marginal expected response across items, with 95% credible interval calculated from the ordinal regression model. Note the scale has been constrained to show relevant region of results. In both plots, response of 3 indicates indifference, a response below 3 indicates a bias to choose the more expected event as more upsetting, and a response above 3 indicates a bias to choose the less expected event as more upsetting. Similar to Study 1, when participants judged that one of the events was more upsetting, they showed a robust bias toward choosing the less expected event as more upsetting. Trials are sorted by response to aid readability. <span data-label="fig:fig1"></span>](fig2.eps)
+
+We have argued that expectations shape our reactions to events because they determine how informative those events are in shaping our understanding of the world. Thus, we argue that well-grounded information theoretic principles can account for people’s divergent moral reactions to likely and unlikely events. 
+
+There's a sense in which it is clearly adaptive that the violation of our expectations would direct our attention to the events and situations about which our understanding is most in need of revision. For instance, an act of terrorism in a peaceful nation might be less expected because of our beliefs about the effectiveness of security forces, the stability of national relationships, and positive relationships among people groups in that nation. Therefore, a surprising act of terrorism casts doubt on our deeper understanding of the geopolitical situation, and thereby leads us to suspect similar acts are more likely to occur in the future. 
+
+Yet, however well-grounded the underlying principles, there’s a clear moral danger whenever expectations influence our moral concerns. For instance, "victim blaming" describes the tendency to shift blame away from aggressors and onto victims of crimes like sexual assault [@Koss2000] and police violence. Work by Janoff-Bulman and colleagues [-@Janoff-bulman1985] has shown that merely increasing the perceived probability of a victim suffering a sexual assault induced participants to blame the victim for her assault. People’s expectations may explain the flip side of victim blaming, whereby those who victim blame also tend to judge transgressors less harshly: When people perceive a victims’ actions as increasing the probability of their eventual assault, they may perceive an aggressor’s actions as producing a smaller change in utility, thus warranting weaker condemnation. 
+
+The influence of expectations on moral evaluations poses perhaps the greatest threat when considering our reactions to humanitarian challenges brought on by poverty or regional instability. In these cases, the influence of expectations on moral evaluations threatens to impose vicious and morally pernicious cycles. For instance, people living in geo-politically unstable regions or in the developing world are often those who are most affected by terrorism, famine, and natural disasters, and are the very people in greatest need of assistance and concern from the world at-large. However, for these very reasons, it is often unsurprising when harm befalls people living in these circumstances. Thus the influence of expectations on moral evaluations threatens to reduce observer's concern for these victims most in need, making people less likely to donate time or money to aid victims, or to take political action to prevent further harms. The present research identifies this potentially pernicious moral bias and grounds it in information theoretic principles. Hopefully, by further understanding these cognitive dynamics, psychologists and policymakers can begin to find ways to reduce or counteract people's tendency to ignore the plight of those in most need of attention.
+
+# Materials and Methods {#materials-and-methods .unnumbered}
+
+We conducted two preregistered studies examining the role of expectations in moral evaluations using two different judgment tasks (https://osf.io/5qnf7/). Each study consisted of multiple trials where participants were presented brief descriptions of two events. Their task was to decide which of the two events was more upsetting. In Study 1, they made a two-alternative forced-choice, and in Study 2 they made their judgments using a five-point rating scale.  Both studies consisted of 16 experimental trials, five “equivalent” filler trials, and five “non-equivalent” filler trials.
+
+In experimental trials, the two events described identical harms, but one event was more expected and one more unexpected, as determined in a prior norming study (see SI).  For example, participants considered the following stimulus: 
 
 * “A 30 year old man in California dies in an earthquake” [Expected]
 
 * “A 30 year old man in Oklahoma dies in an earthquake” [Unexpected]
 
-In each event, the harm to the victim is the same (here, death) but one event is more expected than the other, given the different likelihoods of earthquakes occurring in California versus Oklahoma.
+In each of these events, the harm to the victim is the same (death) but one event is more probable than the other, given the different likelihoods of earthquakes occurring in California versus Oklahoma. In addition to being more naturalistic, manipulating expectations through (otherwise irrelevant) contextual details helps ensure that the harm suffered by the victim is understood to be identical. In the context of gambles, it is possible to manipulate probabilities specifically and directly [@Mellers1997]. However, in the context of more realistic moral harms, any attempt to directly manipulate probabilities risks also changing participants’ perceptions of the degree of harm. For instance, suppose we describe two cancer patients, one with a 5% chance of survival and one with a 50% chance of survival. Even if they both ultimately meet the same fate, participants might fairly assume the patient with the lower chance of survival had a more serious illness, was more debilitated, suffered more severely, and so forth. In contrast, changing the context of the two events explains away these likelihood differences, better equating the events in other respects.
 
-Each study contained between 16 experimental event-pairs that spanned a variety of different events and contexts. All experimental materials for these studies are available as supplemental online materials at [OSF LINK].
+Both studies also included “equivalent” filler trials. In these trials, the two events differed in trivial contextual details that we did not expect would affect participants’ judgments. These filler trials were meant to prevent participants from becoming explicitly aware of the structure of the experimental trials. Finally, both studies included “non-equivalent” filler trials, the two events differed substantially in the degree of harm suffered by a victim, so that one event was expected to be seen as considerably more upsetting than the other. These trials were included to allow participants a chance to use the extremes of the response scale and to reduce any task demands that might drive them to make artificially fine-grained distinctions when generating their responses. All experimental materials for these studies are available as Supporting Information at https://osf.io/5qnf7/.
 
-Both studies included “equivalent” filler trials. In these trials, the two events differed in trivial contextual details that we did not expect would affect participants’ judgments. For example: 
+## Exclusions {#exclusions .unnumbered}
 
-* “A man in Connecticut starts a house fire.” [Equally expected]
+In both studies, we excluded participants who failed to correctly answer attention-check questions or who indicated at the end of the study they had not taken their participation seriously. 
 
-* “A man in New Hampshire starts a house fire.” [Equally expected]
+## Data Analysis {#data-analysis .unnumbered}
 
-These filler trials were meant to prevent participants from becoming explicitly aware of the structure of the experimental trials. Finally, both studies included “non-equivalent” filler trials, the two events differed substantially in the degree of harm suffered by a victim, so that one event was expected to be seen as considerably more upsetting than the other. For example: 
+We analyzed our data by performing Bayesian estimation using the probabilistic programming language Stan [@Carpenter2017]. We tested our preregistered predictions by computing Bayes Factors (i.e. BF01) using the hypothesis function in the R package brms. Bayes Factors express the ratio of the probability of data under the null hypothesis to the probability of the data under an alternative hypothesis. Larger Bayes Factors indicate that the data are more likely under the null hypothesis (i.e., that the intercept is not different from zero) than the alternative hypothesis (i.e., that the intercept is different from zero), and vice versa. As Bayes Factors can be influenced by prior choices (Gelman, Simpson, & Betancourt, 2017), we performed prior robustness checks to confirm that our conclusions would not depend substantially on the specification of the priors. 
 
-* “An 11-year-old child sets a doll on fire” [Less severe]
+To ensure the generality of our findings, we tested participants’ reactions to a variety of items and treated both participants and items as random effects throughout our analyses. The use of random effects over items allows us to consider these items as a sample from a larger population of possible items, and to generalize our findings to that wider population, much as we generalize from our sample of participants to the larger population [@Judd2012].
 
-* “A 12-year-old child sets a cat on fire”  [More severe]
+## Study 1 {#study1 .unnumbered}
 
-These trials were included to allow participants a chance to use the extremes of the response scale and to reduce any task demands that might drive them to make artificially fine-grained distinctions between the severity of events.
-
-## Exclusions
-
-In both studies, we excluded participants who failed to incorrectly answer attention-check questions. These questions asked participants to enter a particular response to ensure that they were paying attention and reading the items as they proceeded through the study. A final question asked participants if they had paid attention and taken the study seriously, encouraging them to be honest in their replies.
-
-## Data Analysis
-
-We analyzed our data by performing Bayesian estimation using the probabilistic programming language Stan [@Carpenter2017]. We tested our predictions by computing Bayes Factors (i.e. BF01) on the intercept term of our regression model using the hypothesis function in the R package brms. Bayes Factors express the ratio of the probability of data under the null hypothesis to the probability of the data under an alternative hypothesis. Therefore, larger Bayes Factors indicate that the data are more likely under the null hypothesis (e.g., that the intercept is not different from zero) than the alternative hypothesis (e.g., that the intercept is different from zero), and vice versa. Bayes Factors can be influenced by prior choices (Gelman, Simpson, & Betancourt, 2017) so we also performed prior robustness checks to confirm that our conclusions were unchanged under different prior assumptions.
-
-# Study 1
-
-Study 1 examined the hypothesis that changes in the prior probability of an event would affect people’s evaluation of that event. 
-
-## Participants
+### Participants {#s1-participants .unnumbered}
 
 A total of `r n_distinct(d_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d$workerId)` passed attention checks and were included in the final analyses (`r gender_exp1$male` male, `r gender_exp1$female` female, median age = `r age_exp1` years old). All participants were paid $0.60 for their participation.
 
-## Materials and procedure
+### Materials and procedure {#s1-materials-procedure .unnumbered}
 
-Participants judged 16 experimental event-pairs and 10 equivalent filler event-pairs. The events were described in the passive voice, and participants were asked to judge which event seemed more upsetting. For example:
+Participants judged 16 experimental event-pairs and 10 equivalent filler event-pairs. On each trial (an example is shown above), participants were presented with the event-pair stimulus and had to judge which outcome was more upsetting in a two-alternative forced choice task. The two events were labeled “Outcome 1” and “Outcome 2” and the order, and whether Outcome 1 or 2 was the unexpected event, was randomized and counter-balanced. 
 
-* A 32 year old woman gets food poisoning after eating a hamburger at a fast food restaurant. [Expected]
+### Results and discussion {#s1-results .unnumbered}
 
-* A 32 year old woman gets food poisoning after eating a hamburger at a four star restaurant. [Unexpected]
-
-On each trial, participants were presented with the event-pair stimulus and had to judge which outcome was more upsetting in a two-alternative forced choice task. The two events were labeled “Outcome 1” and “Outcome 2” and their order was randomized. 
-
-## Results and discussion
-
-We predicted that people would think that events where unexpected harm occurred were more upsetting than events that entail similar harm but were comparatively more expected. As indicated in Figure 1, people judged that unexpected negative events were more upsetting than expected events. To confirm this difference formally, we fit a Bayesian logistic random effects model with participants’ responses as the dependent variable (1 = unexpected event is more upsetting; 0 = expected event is more upsetting) and random intercepts for item and subject, allowing us to generalize to items and subjects we did not test. The intercept in this model represents the log-odds of selecting the unexpected event as being more upsetting. Thus, by examining the population-level intercept, we can test whether participants were biased toward selecting the unexpected event ($\beta$ > 0), the expected event ($\beta$ < 0), or were unbiased ($\beta$ = 0). Consistent with our hypothesis, we found that people were much more likely to think that unexpected events were more upsetting than events that were expected, Intercept = `r round(coefs_exp1$estimate, 3)`, 95% CI [`r round(coefs_exp1$lower, 3)`, `r round(coefs_exp1$upper, 3)`], BF01 `r print_bf(bf_exp1)`. Bayes factors and the estimate of the intercept were similar under different prior choices.
-
-```{r figure1, echo=FALSE, fig.cap="Marginal probability of choosing more likely response as more upsetting in Experiment 1. (DRAFT FIGURE)"}
-
-fig1$trial +
-  coord_cartesian(ylim=c(0,1)) +
-  geom_hline(yintercept = .5, linetype = "dashed") +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-```
-
+We predicted that people would judge that events where unexpected harm occurred were more upsetting than events where expected harm occurred. As indicated in Figure 1, we observed this trend. We estimated the magnitude of this effect by fitting a Bayesian logistic random effects model with participants’ responses as the dependent variable (1 = unexpected event is more upsetting; 0 = expected event is more upsetting) and random intercepts for item and subject, allowing us to generalize both to items and subjects we did not test. The intercept in this model represents the log-odds of selecting the unexpected event as being more upsetting. Thus, by examining the population-level intercept, we can test whether participants were biased toward selecting the unexpected event ($\beta$ > 0), the expected event ($\beta$ < 0), or were unbiased ($\beta$ = 0). We found that people were considerably more likely to think that unexpected events were more upsetting than events that were expected, Intercept = `r round(coefs_exp1$estimate, 3)`, 95% CI [`r round(coefs_exp1$lower, 3)`, `r round(coefs_exp1$upper, 3)`], BF01 `r print_bf(bf_exp1)`.
 Figure 1 shows participants' responses broken-down by individual items. Participants' bias toward selecting the unexpected event as more upsetting was consistent across the 16 experimental items.
 
-# Study 2 
+## Study 2 {#study2 .unnumbered}
 
 In Study 1 we found that people’s judgments of events were biased by their expectations about those events. When forced to choose between two events, participants decided that unexpected events were more upsetting than expected events. In Study 2, we sought to test our hypothesis using a more conservative method: we provided participants with a more expressive response scale so that if they viewed the events under consideration as equally harmful, their responses could reflect their attitude.
 
-## Participants
+### Participants {#s2-participants .unnumbered}
 
-A total of `r n_distinct(d2_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d$workerId)` passed attention checks and were included in the final analyses (`r gender_exp2$male` male, `r gender_exp2$female` female, median age = `r age_exp2` years old). All participants were paid $0.60 for their participation.
+A total of `r n_distinct(d2_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d2$workerId)` passed attention checks and were included in the final analyses (`r gender_exp2$male` male, `r gender_exp2$female` female, median age = `r age_exp2` years old). All participants were paid $0.60 for their participation.
 
-## Materials and procedure
+### Materials and procedure {#s2-materials-procedure .unnumbered}
 
-Participants judged 16 experimental event-pairs. One “equivalent” filler item was changed because participants did not, in fact, view the two outcomes as equally upsetting. (Specifically, participants thought it was more upsetting to have one’s right foot amputated than their left foot) [OSF LINK].
+The materials in Study 2 were the same as those in Study 1. As in Study 1, on each trial of the study, participants were presented with a pair of actions labeled “Outcome 1” and “Outcome 2” and were asked, “Which outcome seems more upsetting?” In Study 2 participants made their rating on a five-point scale (Outcome 1 seems more upsetting, Outcome 1 seems a little more upsetting, neither seems more upsetting than the other, Outcome 2 seems a little more upsetting, Outcome 2 seems more upsetting). 
 
-As in Study 1, on each trial of the study, participants were presented with a pair of actions labeled “Outcome 1” and “Outcome 2” and were asked, “Which outcome seems more upsetting?” However, unlike previous studies, in Study 2 participants made their rating on a five-point scale (Outcome 1 seems more upsetting, Outcome 1 seems a little more upsetting, neither seems more upsetting than the other, Outcome 2 seems a little more upsetting, Outcome 2 seems more upsetting). 
+### Results and discussion {#s2-results .unnumbered}
 
-## Results and discussion
+We predicted that participants would evaluate unexpected events as more upsetting than expected events. We estimated the magnitude of this effect by fitting a cumulative (ordinal) random effects model with participants’ scale responses as the dependent variable (1 to 5) and random intercepts for item and subject. This model produces four intercept coefficients, representing the cumulative log-odds of responses at each scale point or lower. For instance, the second coefficient represents the log-odds participants chose a 2 ("outcome 2 seems slightly more upsetting") or lower on the scale. Similarly, the third intercept coefficient represents the log-odds participants chose a 3 or lower on the scale. To examine the predicted effect, we compared the third intercept coefficient (representing the log-odds of choosing 4 or higher) to the inverse of the second intercept coefficient (thereby representing the log-odds *not* choosing a 3 or higher--i.e., choosing a 1 or 2), allowing us to test whether participants were more likely to choose the expected or unexpected event as being more upsetting in cases where they did not choose the neither option. This analysis indicated that people were more likely to think that events that were unexpected were more upsetting than events that were expected, BF01 `r print_bf(bf_exp2)` (see supporting information for full model results). We observed this difference consistently across nearly every item (Figure 2). 
 
-```{r figure2, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="Marginal expected response (1-5 scale) in Experiment 2. A response of 3 indicates indifference, a response below 3 indicates a bias to choose the less likely response as more upsetting. (DRAFT FIGURE)"}
-fig2$trial +
-  coord_cartesian(ylim=c(2.25,3.25)) +
-  geom_hline(yintercept = 3, linetype = "dashed") +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1))
-```
+We note that the most common response was to view both events, which involve identical harms, as equivalently upsetting. However, when participants did view one of the events as more upsetting, they showed a clear bias towards choosing unexpected events as more upsetting. Thus, Study 2 replicates the tendency to view unexpected moral events as more upsetting using a more conservative judgment task. 
 
-The events participants were asked to compare were, by design, highly similar. Consequently, we expected that participants' would typically indicate that neither event seemed more upsetting. Indeed, we think that this response is, by most people’s lights, the right answer. This was by far the choice participants most frequently made (see Figure 1, panel 3). However, we also observed that when participants did perceive one event was more upsetting than the other, they were biased to perceive unexpected negative events as more upsetting than more-expected negative events. 
+# Theoretical Formalization {#theory .unnumbered}
 
-To examine these findings formally, we performed cumulative (ordinal) regression using a Bayesian random effects model with participants’ scale responses as the dependent variable (1 to 5) and random intercepts for item and subject. This model produces four intercept coefficients, representing the cumulative log-odds of responses at each scale point or higher. For instance, the second coefficient represents the log-odds participants chose a 2 ("outcome 2 seems slightly more upsetting") or lower on the scale. Similarly, the third intercept coefficient represents the log-odds participants chose a 3 or lower on the scale. By comparing the second intercept coefficient to the inverse of the third intercept coefficient (thereby representing the log-odds *not* choosing a 3 or lower--i.e., choosing a 4 or 5), we can test whether participants were more likely to choose the expected or unexpected event as being more upsetting in cases where they did not choose the neither option. This analysis indicated that people were more likely to think that events that were unexpected were more upsetting than events that were expected, BF01 `r print_bf(bf_exp2)` (see supplemental online materials for full model results) -- when participants did exhibit a bias in their responses about which event was more upsetting, they reliably chose the unexpected event was more upsetting than the expected event. 
+Evaluation (e.g., of utility) is often examined in the context of decision-making. However, people often generate post hoc evaluations of events for their own sake. For instance, to reflect on the results of our choices and to evaluate others--to judge the wisdom of their decisions or the morality of their actions. 
 
-# Discussion
+We construe event evaluation as a comparison between the state of affairs prior to an event and the state of affairs following the event. We represent the state of the world as a random variable, $X$. We assume $X$ is discrete, and that every realization $x$ represents some potential specific state of the world in all relevant aspects under consideration. An agent has some utility function $u$, that applies over the different realizations of $X$. Thus the expected utility of the present state of the world is:
 
-On the evening of November 13th, 2015, a terrorist attack in Paris left 130 people dead and injured over 300 more. In the aftermath, millions took to Twitter to express their shock, horror, and outrage at this tragedy under hashtags like `#parisattacks` and `#jesuisparis`. Yet, most of those mourning had little to say 15 hours earlier, when another tragic attack killed at least 43 people in Beirut. Several factors are surely at play in these different reactions  [e.g. group affiliations, @Brewer1999; construal-level theory, @Trope2010], yet one potentially fundamental factor has gone unmentioned: the fact that the Paris attack was more surprising than the attack in Beirut.  In contrast to France, Lebanon had experienced dozens of terrorist bombings and attacks in recent years. Consequently, Beirut may seem to many like the sort of place where “these things happen,” whereas Paris is perceived as being stable and safe.
+\begin{equation}
+E_X[u(X)] = \sum_x u(x)p(x)
+\end{equation}
 
-Consistent with this hypothesis, the results of two preregistered studies suggest that people view unexpected harmful events as more upsetting than expected harmful events. Just as people react more strongly to unexpected monetary gains and losses [@Mellers1997], people similarly are more upset by unexpected moral harm than expected moral harm. However, unlike in the context of gambles, in these contexts the effects of expectations on evaluations may have harmful consequences. When events are shocking, people may perceive them as more severe and consequently be roused to action. In contrast, when events harm victims who are generally considered to be at greater risk--the poor, sick, or those living in unstable regions of the world, reactions are likely to be more muted. 
+When we learn an event has occurred, we can represent this as an observation of another random variable, $S$. We can think of $S$ as a "signalling event" because it informs (signals) to us something about $X$ [this formalism follows @Arrow1996]. For simplicity, we treat $S$ as binary, either 1 or 0. Importantly, we assume there is a dependency between $S$ and $X$, so that observing $S$ informs our knowledge of $X$. For instance, reading a news report of a terror attack in Brussels informs us about the state of the world, telling us about what realizations of X are no longer possible (e.g., any wherein it was a peaceful day in Brussels) and which are more or less likely. Conditioned on $S$, the expected utility of the world is:
 
-What is the source of this bias: prior judgment and decision-making research along with Information Theory suggests that  these effects are unlikely to be a domain-specific quirk of moral thinking and more likely to be a product of information-theoretic mechanisms. The striking consequence of this is that it is quite likely that the bias to ignore expected harm exists because it allows us to efficiently navigation of the world around us; paying attention to events that surprise us allows us to learn the most about the world. But the consequences of this bias seems unambiguously sub-optimal. 
+\begin{equation}
+E_{X|S}[u(X)] = \sum_x u(x)p(x|s)
+\end{equation}
 
-Understood in this way, the inconsistency in people’s attitudes about otherwise similar acts of terrorism seems almost intuitive. An act of terrorism in a peaceful nation might be less expected because of our beliefs about the effectiveness of security forces, the stability of national relationships, and positive relationships among people groups in that nation. In contrast, a surprising act of terrorism casts doubt on our deeper understanding of the geopolitical situation, and thereby leads us to suspect similar acts are more likely to occur in the future. This could rightly increase our concern about this event.  
+We define the value assigned to the signalling event, $V(S)$, as:
 
-However, this bias--regardless of whether it is rooted in otherwise reasonable information-theoretic mechanisms--threatens to impose a vicious and morally pernicious cycle. For instance, people living in geo-politically unstable regions or in the developing world are often those who are most affected by terrorism, famine, and natural disasters, and are the very people in greatest need of assistance and concern from the world at-large. However, for these very reasons, it is often unsurprising when harm befalls people living in these circumstances. Stated another way, expected but nonetheless devastating events elicit little concern, and thus cause people to be less likely to donate time or money to aid victims, or to take political action. Understanding the mechanism that leads people to exhibit a bias where they will be least likely to help those in most need of attention can guide policymakers and psychologists to develop interventions which allow people to overcome this default tendency. 
+\begin{equation}
+V(S) = E_{X|S}[u(X)] - E_X[u(X)]
+\end{equation}
 
-The information-theoretic account has further implications, including offering a unifying explanation for related moral judgment behavior. For instance, the account we’ve discussed can elucidate why people appear to distinguish between acts of omission (e.g., failing to save someone’s life) and commission (e.g., actively killing someone). Most people feel (Spranca, Minsk, & Baron, 1991), and many ethicists argue (e.g., Foot, 1967; Kagan, 1988; Kamm, 1993; Kant 1780/1965; Thomson, 1986), that immoral acts of commission may seem like more severe moral violations than are acts of omission that produce similar outcomes. Our account may shed light on this phenomena: when a person is in a position to be harmed through another’s inaction, that person tends to be at greater risk of harm than a person who can only be harmed through direct action. Therefore, omission generally leads to a smaller change in moral utility than do acts of commission, potentially explaining its less severe moral implications. 
+Which we write more specifically as:
 
-To consider one more example, our account may provide an explanation of certain types of victim blaming. Often, female victims of sexual harassment and assault are held partially responsible for the actions of their male aggressors. This is especially true if they were dressed or acting promiscuously, or if they willfully became intoxicated prior to the assault. People seemingly believe that a woman who behaves in these ways increases the probability that she will suffer sexual assault. Research by Janoff-Bullman, Timko, and Carli (1984) indicates that people are more likely to hold victims accountable for their own rape when the rape was perceived as having a greater prior probability, even when a victim’s behaviors were the same. Not only are victims sometimes held accountable for their own assaults, but victim blaming also serves to shift blame away from the aggressor, leading some people to partially or completely excuse their transgressions. Although these counter-normative attitudes are often extrinsically motivated by misogyny (cite), our account may explain some aspects of this tendency. When people perceive a victims’ actions as increasing the probability of their eventual assault, this affects their utility evaluations of an aggressor’s actions: an aggressor’s actions produce a smaller change in utility, thus warranting weaker condemnation. 
+\begin{equation}
+V(s=1) = \sum_x u(x)p(x|s=1) - \sum_x u(x)p(x)
+\end{equation}
 
-# Acknowledgements
+Applying the expectation of conditional expectation, we can write:
 
-We would like to acknowledge the help of Larisa Hussak, Keith Holyoak, Alan Fiske, Matthew Lieberman, Hongjing Lu, John Hummel, Andrei Cimpian, and Ellen Markman for their comments and support.
+\begin{equation}
+V(s=1) = \sum_x u(x)p(x|s=1) - \sum_x \sum_s u(x)p(x|s)p(s)
+\end{equation}
 
+We then perform some algebra. We break out the summation over $S$ (6), pull the multipliers out of the last two sums (7), rewrite $p(s=0)$ in terms of $p(s=1)$ (8), and factor to combine the first two sums (9).
 
-# Appendix
+\begin{align}
+V(s=1) &= \sum_x u(x)p(x|s=1) - \sum_x u(x)p(x|s=1)p(s=1) - \sum_x u(x)p(x|s=0)p(s=0) \\
+ &= \sum_x u(x)p(x|s=1) - p(s=1)\sum_x u(x)p(x|s=1) - p(s=0) \sum_x u(x)p(x|s=0) \\
+ &= \sum_x u(x)p(x|s=1) - p(s=1)\sum_x u(x)p(x|s=1) - (1-p(s=1)) \sum_x u(x)p(x|s=0) \\
+ &=(1-p(s=1))\sum_x u(x)p(x|s=1) - (1-p(s=1)) \sum_x u(x)p(x|s=0)
+\end{align}
 
-$$ \begin{aligned}
-V(x_i) &= EU(X|x_i) - EU(X) \\
-&=  \sum_{x \in X} U(x)p(x|x_i) - \sum_{x \in X} U(x)p(x) \\
-&= \sum_{x \in X} U(x)p(x|x_i) - \sum_{x \in X} U(x)p(x|x_i)p(x_i) \\
-&= \sum_{x \in X} U(x)p(x|x_i) - p(x_i)\sum_{x \in X} U(x)p(x|x_i) \\
-&= \big(1 - p(x_i) \big) \sum_{x \in X} U(x)p(x|x_i) \\
-\end{aligned}$$
+Finally, combining both sums by their common factor yields (10):
 
-The first step utilizes the Law of the Unconscious Statistician, the next comes from the chain rule of probability, and the final two steps are simple algebra.
+\begin{equation}
+V(s=1)=(1-p(s=1))\sum_x u(x)p(x|s=1) - u(x)p(x|s=0)
+\end{equation}
 
-# References
+Thus, it can be seen under this formalization that the role of expectations in the evaluation of events is fundamental--it does not, for instance, depend on any specifics concerning the utility function over states of the world. Instead, this conclusion depends on just two assumptions: first, that events are evaluated by comparing the utilities of the states of the world prior to and following the event; and second, that knowledge of those states of the world is uncertain.
 
-\setlength{\parindent}{-0.125in} 
-\setlength{\leftskip}{0.125in}
-\noindent
+We have appealed to the informativeness of an event to illustrate intuitively how expectations should influence evaluations. More expected events carry less information, and thereby engender weaker reactions. Though our model of event evaluation is not an information-theoretic model in a direct sense, this interpretation still applies: the information carried by observing $S$ is a function of that observation’s prior probability, which we have in turn shown determines its evaluation. Also relevant, although not addressed here, is the mutual information between $X$ and $S$--the extent to which $S$ informs $X$.
+
+[^1]: It should be recognized that the result we obtain here bears a similarity to the “disappointment function” included in Mellers and colleagues’ [-@Mellers1997] Decision Affect Theory.
+
+<!-- Leave these lines as they are at the end of your .Rmd file to ensure placement of methods & acknowledgements sections before the references-->
+\showmatmethods
+\showacknow
+\pnasbreak

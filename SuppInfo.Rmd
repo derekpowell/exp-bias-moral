@@ -1,4 +1,75 @@
-## Experimental Trials
+---
+title: "Supporting Information"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+
+df_raw <- read.csv("data/WIW_Norming_for_preregistered_study.csv")
+
+reverse_items <- c(
+  "Earthquake",
+  "Tornado",
+  "Fastfood",
+  "Marine",
+  "Police",
+  "Mugging",
+  "Crushed",
+  "Dysentery",
+  "Drunk",
+  "Football"
+)
+
+df_wide <- df_raw %>%
+  filter(Status==0) %>%
+  filter(Check_trial == 5) %>%
+  select(-Check_trial) %>%
+  mutate(sex = if_else(sex == 1, "male", "female"))
+
+df <- df_wide %>%
+  gather(trial, response, Earthquake:Rape) %>%
+  mutate(response = ifelse(trial %in% reverse_items, 6-response, response))
+```
+# Item Norming
+
+We created and normed 20 items, each consisting of a pair of events that differed in their prior likelihood. The two events (outcomes) were manipulated so what one would see more expected than the other. Participants (_N_ = `r nrow(df_wide)`) were asked to choose which event seemed more likely using a 5-point scale (1 = Event 1 seems a lot more likely, 2 = Event 1 seems a little more likely, 3 = Neither event seems more likely, 4 = Event 2 seems a little more likely, 5 = Event 2 seems much more likely). As predicted, for all items the "more expected" outcome was judged to be more likely. Plot below shows mean likelihood rating by item along with approximate 95% confidence intervals.
+
+```{r, echo=FALSE}
+# standard error function
+stderr <- function(x) {
+          sqrt(var(x[!is.na(x)]) / length(x[!is.na(x)]))
+}
+
+
+df %>%
+  group_by(trial) %>%
+  summarize(
+    Mean = mean(response),
+    UL = mean(response) + 1.96*stderr(response),
+    LL = mean(response) - 1.96*stderr(response)
+    ) %>%
+  ggplot() +
+  aes(x = reorder(trial, -Mean), y = Mean, ymin = LL, ymax=UL) +
+  geom_pointrange() +
+  geom_hline(yintercept = 3, linetype="dashed") +
+  coord_cartesian(ylim=c(1,5)) +
+  theme_bw()+
+  labs(x = "Trial", y="Mean Likelihoods Judgment") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+From among these 20 items we selected 16 items for use in our experiments.
+
+
+\newpage
+## Items
+
+Below we provide the full text of items as presented to participants.
+
+### Experimental Trials
 
 | Trial      | More Expected                                                | Less Expected                                                |
 | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -19,7 +90,9 @@
 | Fastfood   | A 32 year old woman gets food poisoning after eating a hamburger at a fast food restaurant. | A 32 year old woman gets food poisoning after eating a hamburger at a four star restaurant. |
 | Police     | A criminal shoots and wounds a police officer while the officer is responding to a 911 call reporting a robbery in progress. | A criminal shoots and wounds a police officer while the officer is responding to a 911 call reporting vandalism. |
 
-## Filler Trials
+\newpage
+
+### Filler Trials
 
 | Trial    | Outcome 1                                                    | Outcome 2                                                    |
 | -------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
@@ -28,21 +101,27 @@
 | Check3   | A participant who is paying attention will select event one  | Please select event one seems a little more upsetting.       |
 | NoDiff1  | A man in Connecticut dies in a house fire.                   | A man in New Hampshire dies in a house fire.                 |
 | NoDiff2  | A family in Florida is evicted from their home after they run into financial troubles. | A family in Louisiana is evicted from their home after they run into financial troubles. |
-| NoDiff3* | After an accident, a machinist has to have his foot amputated. | After an accident, a metalworker has to have his foot amputated. |
+| NoDiff3  | After an accident, a machinist has to have his foot amputated. | After an accident, a metalworker has to have his foot amputated. |
 | NoDiff4  | A girl skins her knees skateboarding.                        | A girl skins her knees rollerblading.                        |
 | NoDiff5  | A large tree branch falls and injures a couple walking home from a baby shower. | A large tree branch falls and injures a couple walking home from their church. |
 | BigDiff1 | A cat hurts its leg jumping off the refrigerator.            | A cat dies after eating spoiled food.                        |
 | BigDiff2 | A parked car is damaged in a parking lot in Oregon.          | A car is totaled on the highway in Washington.               |
-| BigDiff3 | $1000 worth of products from an electronics store are destroyed in a shipping accident. | $200 worth of products from a clothing store are burned in a shipping accident. |
+| BigDiff3* | \$1000 worth of products from an electronics store are destroyed in a shipping accident. | \$200 worth of products from a clothing store are burned in a shipping accident. |
 | BigDiff4 | A knife is found in a high school student's locker.          | A gun is found in a high school student's gym bag.           |
 | BigDiff5 | A 30 year-old man is killed in a car crash.                  | A 35 year-old man is injured in a cycling accident.          |
 
+_* As presented in Study 2. In Study 1, this concerned a construction worker having his left versus right foot amputated, but participants judged having one's right foot amputated was somewhat worse than having one's left foot amptuated._
+
+\newpage
+
 ## Discarded items
+
+These items were included in the norming study but were not ultimately selected for the final study. "Heroin" and "theft" showed the weakest effects on likelihood judgments. We decided that the damage to property in "Scratched" was not sufficiently moral in nature. Finally, "brokeninto" was discarded for being too similar to "flattire" which we ultimately decided had more significant moral content.
 
 | Trial      | Event 1                                                      | Event 2                                                      |
 | ---------- | ------------------------------------------------------------ | ------------------------------------------------------------ |
 | heroin     | A suburban teenage boy dies of a heroin overdose.            | A homeless teenage boy dies of a heroin overdose.            |
-| theft      | A man in training steals $50,000 from a small business he recently began working for. | A man on probation steals $50,000 from a small business he recently began working for. |
+| theft      | A man in training steals \$50,000 from a small business he recently began working for. | A man on probation steals $50,000 from a small business he recently began working for. |
 | scratched  | A woman's car is scratched in a quiet parking lot.           | A woman's car is scratched in a busy parking lot.            |
 | brokeninto | Three cars on the same street are broken into while parked in the suburbs. | Three cars on the same street are broken into while parked downtown. |
 

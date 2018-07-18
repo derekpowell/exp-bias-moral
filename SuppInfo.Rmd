@@ -1,8 +1,9 @@
 ---
 title: "Supporting Information"
 output:
-  pdf_document: default
-  html_notebook: default
+  pdf_document:
+    keep_tex: true
+  # html_notebook: default
 ---
 
 ```{r, include=FALSE}
@@ -33,9 +34,10 @@ df <- df_wide %>%
   gather(trial, response, Earthquake:Rape) %>%
   mutate(response = ifelse(trial %in% reverse_items, 6-response, response))
 ```
+
 # Item Norming
 
-We created and normed 20 items, each consisting of a pair of events that differed in their prior likelihood. The two events (outcomes) were manipulated so what one would see more expected than the other. Participants (_N_ = `r nrow(df_wide)`) were asked to choose which event seemed more likely using a 5-point scale (1 = Event 1 seems a lot more likely, 2 = Event 1 seems a little more likely, 3 = Neither event seems more likely, 4 = Event 2 seems a little more likely, 5 = Event 2 seems much more likely). As predicted, for all items the "more expected" outcome was judged to be more likely. Plot below shows mean likelihood rating by item along with approximate 95% confidence intervals.
+We created and normed 20 items, each consisting of a pair of events that differed in their prior likelihood. The two events (outcomes) were manipulated so what one would seem more expected than the other. Participants (_N_ = `r nrow(df_wide)`) were asked to choose which event seemed more likely using a 5-point scale (1 = Event 1 seems a lot more likely, 2 = Event 1 seems a little more likely, 3 = Neither event seems more likely, 4 = Event 2 seems a little more likely, 5 = Event 2 seems much more likely). As predicted, for all items the "more expected" outcome was judged to be more likely. Plot below shows mean likelihood rating by item along with approximate 95% confidence intervals.
 
 ```{r, echo=FALSE}
 # standard error function

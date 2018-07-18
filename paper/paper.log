@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  2 JUL 2018 13:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.5.22)  9 JUL 2018 16:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1903,26 +1903,26 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
 (Font)              scaled to size 7.59998pt on input line 95.
 
-Underfull \vbox (badness 2884) has occurred while \output is active []
+Underfull \vbox (badness 2932) has occurred while \output is active []
 
-Package mdframed Info: mdframed works in twoside mode on input line 142.
+Package mdframed Info: mdframed works in twoside mode on input line 137.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 142.
+(Font)              scaled to size 9.49997pt on input line 137.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 142.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 137.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 9.49997pt on input line 142.
+(Font)              scaled to size 9.49997pt on input line 137.
 Package mdframed Info: mdframed inside float 
- mdframed uses option nobreak mdframed on input line 142.
+ mdframed uses option nobreak mdframed on input line 137.
 Package mdframed Info: mdframed inside a box 
- mdframed uses option nobreak mdframed on input line 142.
+ mdframed uses option nobreak mdframed on input line 137.
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 5.69998pt on input line 142.
+(Font)              scaled to size 5.69998pt on input line 137.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <7> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 174.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 172.
 LaTeX Font Info:    Font shape `T1/phv/b/n' will be
-(Font)              scaled to size 6.64998pt on input line 174.
-LaTeX Font Info:    Try loading font information for T1+bch on input line 174.
+(Font)              scaled to size 6.64998pt on input line 172.
+LaTeX Font Info:    Try loading font information for T1+bch on input line 172.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/psnfss/t1bch.fd
 File: t1bch.fd 2004/10/18 font definitions for T1/bch.
@@ -1935,59 +1935,59 @@ File: mt-bch.cfg 2007/03/03 v1.5 microtype config. file: Bitstream Charter (RS)
 
 ]
 Package epstopdf Info: Source file: <fig1.eps>
-(epstopdf)                    date: 2018-07-02 13:41:42
-(epstopdf)                    size: 9428 bytes
+(epstopdf)                    date: 2018-07-09 16:00:42
+(epstopdf)                    size: 9432 bytes
 (epstopdf)             Output file: <fig1-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-07-02 13:41:51
-(epstopdf)                    size: 11523 bytes
+(epstopdf)                    date: 2018-07-09 16:00:53
+(epstopdf)                    size: 11518 bytes
 (epstopdf)             Command: <repstopdf --outfile=fig1-eps-converted-to.pdf 
 fig1.eps>
-(epstopdf)             \includegraphics on input line 280.
+(epstopdf)             \includegraphics on input line 279.
 Package epstopdf Info: Output file is already uptodate.
 
 <fig1-eps-converted-to.pdf, id=68, 247.92625pt x 247.92625pt>
 File: fig1-eps-converted-to.pdf Graphic file (type pdf)
 
 <use fig1-eps-converted-to.pdf>
-Package pdftex.def Info: fig1-eps-converted-to.pdf used on input line 280.
+Package pdftex.def Info: fig1-eps-converted-to.pdf used on input line 279.
 (pdftex.def)             Requested size: 247.92564pt x 247.92564pt.
 
-Overfull \hbox (1.82878pt too wide) in paragraph at lines 280--286
+Overfull \hbox (1.82878pt too wide) in paragraph at lines 279--285
  [][] 
  []
 
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 300.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 299.
 LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
-(Font)              scaled to size 6.64998pt on input line 300.
+(Font)              scaled to size 6.64998pt on input line 299.
 [2]
 Package epstopdf Info: Source file: <fig2.eps>
-(epstopdf)                    date: 2018-07-02 13:41:45
-(epstopdf)                    size: 49935 bytes
+(epstopdf)                    date: 2018-07-09 16:00:46
+(epstopdf)                    size: 49923 bytes
 (epstopdf)             Output file: <fig2-eps-converted-to.pdf>
-(epstopdf)                    date: 2018-07-02 13:41:52
-(epstopdf)                    size: 13775 bytes
+(epstopdf)                    date: 2018-07-09 16:00:54
+(epstopdf)                    size: 13725 bytes
 (epstopdf)             Command: <repstopdf --outfile=fig2-eps-converted-to.pdf 
 fig2.eps>
-(epstopdf)             \includegraphics on input line 303.
+(epstopdf)             \includegraphics on input line 302.
 Package epstopdf Info: Output file is already uptodate.
- <fig2-eps-converted-to.pdf, id=83, 247.92625pt x 324.21124pt>
+ <fig2-eps-converted-to.pdf, id=82, 247.92625pt x 324.21124pt>
 File: fig2-eps-converted-to.pdf Graphic file (type pdf)
 
 <use fig2-eps-converted-to.pdf>
-Package pdftex.def Info: fig2-eps-converted-to.pdf used on input line 303.
+Package pdftex.def Info: fig2-eps-converted-to.pdf used on input line 302.
 (pdftex.def)             Requested size: 247.92564pt x 324.21045pt.
 
-Overfull \hbox (1.82878pt too wide) in paragraph at lines 303--315
+Overfull \hbox (1.82878pt too wide) in paragraph at lines 302--313
  [][] 
  []
 
 [3 <./fig1-eps-converted-to.pdf> <./fig2-eps-converted-to.pdf>]
 LaTeX Font Info:    Font shape `T1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 655.
+(Font)              scaled to size 7.59998pt on input line 647.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 655.
-LaTeX Font Info:    Try loading font information for TS1+lmr on input line 655.
+(Font)              <8> on input line 647.
+LaTeX Font Info:    Try loading font information for TS1+lmr on input line 647.
 
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/lm/ts1lmr.fd
@@ -1995,52 +1995,50 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 
 Package hyperref Warning: Difference (2) between bookmark levels is greater 
-(hyperref)                than one, level fixed on input line 655.
+(hyperref)                than one, level fixed on input line 647.
 
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 655.
+(hyperref)                be the same. Added a new anchor on input line 647.
 
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <8> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 655.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 647.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <8> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 655.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 647.
 LaTeX Font Info:    Font shape `T1/phv/b/sl' will be
-(Font)              scaled to size 7.59998pt on input line 655.
+(Font)              scaled to size 7.59998pt on input line 647.
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 655.
+(hyperref)                be the same. Added a new anchor on input line 647.
 
 
 Package hyperref Warning: The anchor of a bookmark and its parent's must not
-(hyperref)                be the same. Added a new anchor on input line 655.
+(hyperref)                be the same. Added a new anchor on input line 647.
 
-[4] [5]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-Extra height:10.0pt when 18.77774pt
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-Extra height:0.0pt when 19.77774pt
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-(2)Left:19.77774pt Right:19.0pt Output:19.77774pt
+[4]
+Extra height:0.0pt when 638.93095pt
+(2)Left:638.93095pt Right:642.0171pt Output:638.93095pt
+(2)Left:642.0171pt Right:633.0171pt Output:642.0171pt
 - LAST -
-Left:19.77774pt
-Right:19.0pt
-Output:19.77774pt
+Left:642.0171pt
+Right:633.0171pt
+Output:642.0171pt
+
+
+LaTeX Warning: Optional argument of \twocolumn too tall on page 5(2 stulpelis).
+
+
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
+
+LaTeX Warning: Text page 5 contains only floats.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [5]
 
 Package caption Warning: Unused \captionsetup[table] on input line 166.
 See the caption package documentation for explanation.
@@ -2048,10 +2046,10 @@ See the caption package documentation for explanation.
 
 AED: lastpage setting LastPage
 - LAST -
-Extra skip:36.0pt
-Left:216.0pt/2.0pt
-Right:180.0pt/2.0pt
-Output:216.0pt
+Extra skip:8.55556pt
+Left:198.0pt/1.55556pt
+Right:189.0pt/2.0pt
+Output:198.5pt
 [6]
 
 Package catoptions Warning: Undefined options 
@@ -2059,54 +2057,53 @@ Package catoptions Warning: Undefined options
 (catoptions)                fontenc.sty,T1,. 
 (catoptions)                Default action already taken in each case .
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 740.
-Package atveryend Info: Executing hook `AfterLastShipout' on input line 740.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 731.
+Package atveryend Info: Executing hook `AfterLastShipout' on input line 731.
 (./paper.xwm) (./paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 740.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 740.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 731.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 731.
 Package rerunfilecheck Info: File `paper.out' has not changed.
 (rerunfilecheck)             Checksum: 5A20A91B046FD409AA68370C249A858D;860.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 740.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 731.
  ) 
 Here is how much of TeX's memory you used:
- 35394 strings out of 493014
- 657685 string characters out of 6133351
- 804806 words of memory out of 5000000
- 38046 multiletter control sequences out of 15000+600000
- 103509 words of font info for 211 fonts, out of 8000000 for 9000
+ 35381 strings out of 493014
+ 657542 string characters out of 6133351
+ 826007 words of memory out of 5000000
+ 38044 multiletter control sequences out of 15000+600000
+ 100063 words of font info for 205 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 69i,15n,73p,10395b,1036s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 67i,14n,73p,10395b,1036s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.1} has been referenced but does not exi
 st, replaced by a fixed one
 
 {/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/loca
 l/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/local/texlive/2016
 /texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}{/usr/local/texlive/2016/texmf-dist/fo
-nts/enc/dvips/lm/lm-mathit.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dv
-ips/base/8r.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-ts1.e
+nts/enc/dvips/base/8r.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/l
+m/lm-mathit.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-ts1.e
 nc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/lm/lm-mathex.enc}</usr/l
 ocal/texlive/2016/texmf-dist/fonts/type1/bitstrea/charter/bchb8a.pfb></usr/loca
-l/texlive/2016/texmf-dist/fonts/type1/public/lm/lmbx9.pfb></usr/local/texlive/2
-016/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/2016/texmf-
-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2016/texmf-dist/fonts/
-type1/public/lm/lmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
-c/lm/lmmi9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr5.p
-fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr6.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/local/texlive/2
-016/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/2016/texmf-di
-st/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
-e1/public/lm/lmri8.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/l
-m/lmssbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy6.
-pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy8.pfb></usr/l
-ocal/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/local/texliv
-e/2016/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/texlive/2016/
-texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/2016/texmf-
-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2016/texmf-dist/fo
-nts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on paper.pdf (6 pages, 312966 bytes).
+l/texlive/2016/texmf-dist/fonts/type1/public/lm/lmex10.pfb></usr/local/texlive/
+2016/texmf-dist/fonts/type1/public/lm/lmmi6.pfb></usr/local/texlive/2016/texmf-
+dist/fonts/type1/public/lm/lmmi8.pfb></usr/local/texlive/2016/texmf-dist/fonts/
+type1/public/lm/lmmi9.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
+c/lm/lmr5.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr6.pf
+b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr7.pfb></usr/loca
+l/texlive/2016/texmf-dist/fonts/type1/public/lm/lmr8.pfb></usr/local/texlive/20
+16/texmf-dist/fonts/type1/public/lm/lmr9.pfb></usr/local/texlive/2016/texmf-dis
+t/fonts/type1/public/lm/lmri8.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
+e1/public/lm/lmssbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
+c/lm/lmsy6.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy8.
+pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/lm/lmsy9.pfb></usr/l
+ocal/texlive/2016/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/local/te
+xlive/2016/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/local/texlive/
+2016/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/local/texlive/2016/te
+xmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on paper.pdf (6 pages, 291425 bytes).
 PDF statistics:
- 231 PDF objects out of 1000 (max. 8388607)
- 194 compressed objects within 2 object streams
+ 229 PDF objects out of 1000 (max. 8388607)
+ 193 compressed objects within 2 object streams
  36 named destinations out of 1000 (max. 500000)
- 43647 words of extra memory for PDF output out of 51595 (max. 10000000)
+ 43135 words of extra memory for PDF output out of 51595 (max. 10000000)
 

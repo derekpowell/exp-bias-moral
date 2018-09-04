@@ -32,7 +32,7 @@ abstract: |
 keywords          : "Evaluation; Moral judgment; Information theory"
 wordcount         : "X"
 
-bibliography      : ["wiw-biblio.bib"]
+bibliography      : ["wiw-biblio.bib", "r-references.bib"]
 
 floatsintext      : yes
 figurelist        : no
@@ -368,6 +368,15 @@ library(gridExtra)
 ggsave("fig2.eps", grid.arrange(g), height=11.4, width=8.7, units = "cm")
 ```
 
+```{r}
+my_citations <- cite_r(
+  file = "r-references.bib"
+  , pkgs = c("tidyverse", "brms", "gridExtra", "papaja")
+  , withhold = FALSE
+  # , footnote = TRUE
+)
+```
+
 When we learn of tragic events--a friend's loss of a loved-one, a violent killing, or a terrorist attack--we are mournful, concerned, angry, and driven to action. But our responses to these events differ depending on the context in which they occur [e.g., @Trope2010]. In particular, our expectations play an important role in our reactions to events. This seems true of the ordinary: when a friend's loved-one passes, we often ask, "was it sudden?"; the dramatic: a murder in a sleepy town prompts a very different reaction than a similar crime in a major city; and even the catastrophic: acts of terrorism seem to evoke more outrage, horror, and concern when they occur in peaceful rather than unstable regions. For instance, the 2015 Paris attacks were felt around the world. Yet, most of those mourning had little to say 15 hours earlier, when another tragic attack killed at least 43 people in Beirut [@Graham2015]. Likewise, stories of the Virginia Tech massacre, which killed 32 people, wildly overshadowed coverage of attacks killing nearly 200 people in Iraq--one of the bloodiest days since the 2003 invasion [@Greenslade2007]. In each of these situations, the surprise elicited by an event appears to have affected people’s reactions to it. In some contexts, harm is tragic. In others, “these things happen.” 
 
 Although this pattern seems so intuitive as to be obvious, no reasonable code of ethics would justify these judgments, nor do any moral psychological frameworks explicate the role of expectations in moral evaluations. Outside of the domain of morality, everyday experiences and controlled experiments show that people’s evaluations of events unambiguously depend on their expectations about those events. There is a special thrill to having one’s expectations exceeded and disappointment when events fail to meet expectations: we root for the underdog, hold surprise parties, and foreshadow bad news to ease its delivery [@Bell1985]. Indeed, in a controlled study, Mellers and colleagues [-@Mellers1997] found that expectations influenced affective reactions during a gambling task: Participants were often more excited by an small unexpected gain (e.g., winning \$30 with 10% probability) than they were by a larger but more expected gain (e.g., winning \$60 with 90% probability) [also see @Shepperd2002]. 
@@ -428,7 +437,7 @@ In both studies, we excluded participants who failed to correctly answer attenti
 
 ## Data Analysis 
 
-We analyzed our data by performing Bayesian estimation using the probabilistic programming language Stan [@Carpenter2017]. We tested our preregistered predictions by computing Bayes Factors (i.e. $BF_{01}$) using the hypothesis function in the R package brms. Bayes Factors express the ratio of the probability of data under the null hypothesis to the probability of the data under an alternative hypothesis. Larger Bayes Factors indicate that the data are more likely under the null hypothesis (i.e., that the intercept is not different from zero) than the alternative hypothesis (i.e., that the intercept is different from zero), and vice versa. As Bayes Factors can be influenced by prior choices [@Gelman2017], we performed prior robustness checks to confirm that our conclusions would not depend substantially on the specification of the priors. 
+All analyses were carried out in `r my_citations`. We analyzed our data by performing Bayesian estimation using the probabilistic programming language Stan [@Carpenter2017]. We tested our preregistered predictions by computing Bayes Factors (i.e. $BF_{01}$) using the *hypothesis* function in the R-package *brms* [Version 2.2.0; @R-brms]. Bayes Factors express the ratio of the probability of data under the null hypothesis to the probability of the data under an alternative hypothesis. Larger Bayes Factors indicate that the data are more likely under the null hypothesis (i.e., that the intercept is not different from zero) than the alternative hypothesis (i.e., that the intercept is different from zero), and vice versa. As Bayes Factors can be influenced by prior choices [@Gelman2017], we performed prior robustness checks to confirm that our conclusions would not depend substantially on the specification of the priors. 
 
 To ensure the generality of our findings, we tested participants’ reactions to a variety of items and treated both participants and items as random effects throughout our analyses. The use of random effects over items allows us to consider these items as a sample from a larger population of possible items, and to generalize our findings to that wider population, much as we generalize from our sample of participants to the larger population [@Judd2012].
 
@@ -489,7 +498,6 @@ We have argued that expectations shape our reactions to events because they dete
 In some contexts, it is clearly adaptive that the violation of our expectations would direct our attention to the events and situations about which our understanding is most in need of revision [@Rescorla1972]. For instance, an act of terrorism in a peaceful nation might be less expected because of our beliefs about the effectiveness of security forces, the stability of national relationships, and positive relationships among people groups in that nation. Therefore, a surprising act of terrorism casts doubt on our deeper understanding of the geopolitical situation, and thereby leads us to suspect similar acts are more likely to occur in the future. 
 
 Yet, however well-grounded the underlying principles, there is a clear moral danger whenever expectations influence our moral concerns. In particular, these effects pose a significant threat when considering our reactions to humanitarian challenges brought on by poverty or regional instability. In these cases, the influence of expectations on moral evaluations threatens to impose vicious and morally pernicious cycles. For instance, people living in geo-politically unstable regions or in the developing world are often those who are most affected by terrorism, famine, and natural disasters, and are the very people in greatest need of assistance and concern from the world at-large. However, for precisely these reasons, it is often unsurprising when harm befalls people living in these circumstances. Thus the influence of expectations on moral evaluations threatens to reduce observer's concern for these victims most in need, making people less likely to donate time or money to aid victims, or to take political action to prevent further harms. The present research identifies this potentially pernicious moral bias and grounds it in information theoretic principles. Hopefully, by further understanding these cognitive dynamics, psychologists and policymakers can begin to find ways to reduce or counteract people's tendency to ignore the plight of those in most need of attention.
-
 
 ```{r render_appendix, include=FALSE}
 render_appendix("appendix.Rmd")

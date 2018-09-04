@@ -1,73 +1,63 @@
 ---
-title: Expectations bias moral evaluations
+title             : "Expectations bias moral evaluations"
+shorttitle        : "Expectations bias moral evaluations"
 
-# Use letters for affiliations, numbers to show equal authorship (if applicable) and to indicate the corresponding author
-author:
-  - name: Derek Powell
-    affiliation: a,1
-  - name: Zachary Horne
-    affiliation: b
-address:
-  - code: a
-    address: Stanford University, Department of Psychology, 450 Serra Mall, Stanford, CA, 94305
-  - code: b
-    address: Arizona State University, School of Social and Behavioral Sciences, 13591 N 47th Ave, Phoenix, AZ 85051
+author: 
+  - name          : "Derek Powell"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Stanford University, Department of Psychology, 450 Serra Mall, Stanford, CA, 94305"
+    email         : "derekpowell@stanford.edu"
+  - name          : "Zachary Horne"
+    affiliation   : "2"
 
-corresponding_author:
-  - code: 1
-    text: "To whom correspondence should be addressed. E-mail: derekpowell@stanford.edu"
+affiliation:
+  - id            : "1"
+    institution   : "Stanford University"
+  - id            : "2"
+    institution   : "Arizona State University"
 
-# For footer text
-lead_author_surname: Powell
-
-## Remove this if not required - talk to zach 
-# equal_authors:
-#   - code: 0
-#     text: 
-
-
-author_contributions: |
+authornote: |
+  Derek Powell, Department of Psychology, Stanford University; Zachary Horne, School of Social and Behavioral Sciences, Arizona State University.
+  
+  The authors would like to acknowledge the help of Larisa Hussak, Keith Holyoak, Alan Fiske, Hongjing Lu, John Hummel, Andrei Cimpian, and Ellen Markman for their comments and support.
+  
   Both authors jointly conceived of the project and theory, designed and conducted experiments, and analyzed results. D.P. developed the formal aspects of the theory. 
 
-## Remove this if not required
-conflict_of_interest: |
-  The authors declare no conflicts of interest.
-
 abstract: |
- When we learn of tragic events--a violent killing or a terrorist attack--we are mournful and often driven to action. But responses to these events can differ substantially depending on the context in which they occur. When tragedy takes us by surprise, we are shocked and outraged, but when it strikes in unstable regions or rough neighborhoods, we are often resigned to feel that “these things happen.” Here we explain the role that expectations seem to play in moral evaluation by modeling evaluations as the comparison of the state of the world before and after an event. According to this theory, expectations influence evaluations through information-theoretic principles: less expected events do more to inform us about the state of the world than do more expected events. Consistent with this theory, in two preregistered studies we found that people’s judgments of morally-significant events were affected by the prior probability of that event. People were more upset about an event that was unexpected (e.g., a robbery at a clothing store) than an event that was more more probable (e.g., a robbery at a convenience store). This bias threatens to impose a pernicious cycle: People living in poverty, geo-politically unstable regions, and other dangerous circumstances have the greatest need for assistance and concern. However, for these very reasons, it is often unsurprising when they are harmed. Consequently, the influence of expectations on moral evaluations threatens to reduce observers’ concern for those most in need.
+  When we learn of tragic events--a violent killing or a terrorist attack--we are mournful and often driven to action. But responses to these events can differ substantially depending on the context in which they occur. When tragedy takes us by surprise, we are shocked and outraged, but when it strikes in unstable regions or rough neighborhoods, we are often resigned to feel that “these things happen.” Here we explain the role that expectations seem to play in moral evaluation by modeling evaluations as the comparison of the state of the world before and after an event. According to this theory, expectations influence evaluations through information-theoretic principles: less expected events do more to inform us about the state of the world than do more expected events. Consistent with this theory, in two preregistered studies we found that people’s judgments of morally-significant events were affected by the prior probability of that event. People were more upset about an event that was unexpected (e.g., a robbery at a clothing store) than an event that was more more probable (e.g., a robbery at a convenience store). This bias threatens to impose a pernicious cycle: People living in poverty, geo-politically unstable regions, and other dangerous circumstances have the greatest need for assistance and concern. However, for these very reasons, it is often unsurprising when they are harmed. Consequently, the influence of expectations on moral evaluations threatens to reduce observers’ concern for those most in need.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "Evaluation; Moral judgment; Information theory"
+wordcount         : "X"
 
+bibliography      : ["wiw-biblio.bib"]
 
+floatsintext      : yes
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : no
+mask              : no
+draft             : no
 
-significance: |
-  In two behavioral studies, we found that people's expectations biased their reactions to morally-significant events--people were more upset by surprising harms than more expected harms. This bias threatens to impose a pernicious cycle: People living in poverty, unstable regions, and other dangerous circumstances have the greatest need for assistance and concern from the world at-large. Yet for this very reason, it is often unsurprising when they are harmed. By blunting observers' concern for the disadvantaged, this bias could make people less likely to donate money, to volunteer, or to take political action, thereby increasing inequality and compounding suffering. Recognizing and understanding this bias will suggest ways to mitigate its harmful consequences.
-
-
-
-
-acknowledgements: |
-  We would like to acknowledge the help of Larisa Hussak, Keith Holyoak, Alan Fiske, Hongjing Lu, John Hummel, Andrei Cimpian, and Ellen Markman for their comments and support.
-
-keywords:
-  - evaluation
-  - moral judgment
-  - information theory
-  # - optional
-  # - optional
-
-## must be one of: pnasresearcharticle (usual two-column layout), pnasmathematics (one column layout), or pnasinvited (invited submissions only)
-pnas_type: pnasresearcharticle
-
-bibliography: wiw-biblio.bib
-csl: pnas.csl
-
-## change to true to add optional line numbering
-lineno: FALSE
-
-output: rticles::pnas_article
+documentclass     : "apa6"
+classoption       : "man"
+output:
+  papaja::apa6_pdf:
+    includes:
+      after_body: "appendix.tex"
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup, include = FALSE}
+library("papaja")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
 ```
 
 ```{r load data, include=FALSE}
@@ -203,7 +193,7 @@ fit_exp1 <- cbrm(
   cores = parallel::detectCores(),
   sample_prior = TRUE,
   iter = 2000,
-  cached_file = "fit_exp1.rds"
+  file = "brms_models/fit_exp1.rds"
   )
 
 fit_exp2 <- cbrm(
@@ -215,7 +205,7 @@ fit_exp2 <- cbrm(
   cores = parallel::detectCores(),
   sample_prior = TRUE,
   iter = 2000,
-  cached_file = "fit_exp2.rds"
+  file = "brms_models/fit_exp2.rds"
   )
 
 fit_exp1rand <- cbrm(
@@ -227,7 +217,7 @@ fit_exp1rand <- cbrm(
   sample_prior = TRUE,
   cores = parallel::detectCores(),
   iter = 2000,
-  cached_file = "fit_exp1rand.rds"
+  file = "brms_models/fit_exp1rand.rds"
   )
 
 fit_exp2rand <- cbrm(
@@ -239,7 +229,7 @@ fit_exp2rand <- cbrm(
   cores = parallel::detectCores(),
   sample_prior = TRUE,
   iter = 2000,
-  cached_file = "fit_exp2rand.rds"
+  file = "brms_models/fit_exp2rand.rds"
   )
 ```
 
@@ -416,23 +406,11 @@ This conclusion does not depend on the nature of the event in question nor on th
 
 Given the potentially fundamental role that expectations play in event evaluation, and the potentially serious moral biases that may result, we sought to test empirically whether people’s evaluations of morally harmful events are affected by their expectations about those events. We conducted two preregistered studies examining the role of expectations in moral evaluations. In both studies, participants were presented with a series of trials in which they read brief descriptions of two different events and were asked to indicate which of the two events seemed more upsetting. In these trials, the two events were highly similar, but were manipulated so that they differed in their perceived prior probabilities: one event was more expected and one more unexpected. 
 
-The design of these studies was chosen with special consideration to two theoretical points. First, the information-theoretic account we have described makes a solely directional prediction--all else being equal, more surprising events will elicit stronger reactions than less surprising events. Asking participants to compare two similar events allowed us to test this directional prediction. Second, it is the informativeness of events, determined by one's prior expectations of the event, that we predicted would shape evaluations. Thus, reasoners should not have to be induced to hold expectations experimentally [as in experiments by @Mellers1997], but instead their own prior beliefs should be sufficient to shape their expectations and affect their evaluations. For this reason, we manipulated the prior probability of events by describing two otherwise identical events occurring in different contexts. We explicitly chose contexts that differed in ways that could not be accounted for by construal-level explanations [@Trope2010] or explanations based on biases towards one’s ingroup [@Brewer1999]. This both allowed us to test the role of expectations based on world knowledge and provided a more naturalistic set of items.
-
-![Probability with which participants chose the less expected event as more upsetting across trials in Study 1. As predicted, participants exhibited a robust bias toward choosing the less expected event as more upsetting across all items. Error bars represent 95% credible intervals calculated from the hierarchical logistic regression model. See Supporting Information for full description of items. <span data-label="fig:fig1"></span>](fig1.eps)
-
-Consistent with our predictions, manipulating expectations shaped evaluations across a range of morally-significant events. We found that people viewed unexpected harmful events as more upsetting than expected harmful events, even when the harm a victim suffered was the same. For instance, people judged that a robbery at a clothing store (unexpected) was more upsetting than a robbery at a convenience store (expected). Furthermore, these differences were large, systematic, and robust. Although there was variability in the situations that elicited the largest differences, our statistical approach treated trial as a random effect (see Methods and Results), allowing us to generalize our conclusions to items we did not test [@Judd2012].
-
-![Participants’ responses by item in Study 2. Upper: heatmap plot displaying probability of choosing each response on the 1 to 5 scale across items. Lower: marginal expected response across items, with 95% credible interval calculated from the ordinal regression model. Note the scale has been constrained to show relevant region of results. In both plots, a response of 3 indicates indifference, responses below 3 indicate a bias to choose the more expected event as more upsetting, and responses above 3 indicate a bias to choose the less expected event as more upsetting. Similar to Study 1, participants showed a robust bias toward choosing the less expected event as more upsetting. Trials are sorted by response to aid readability. <span data-label="fig:fig1"></span>](fig2.eps)
-
-We have argued that expectations shape our reactions to events because they determine how informative those events are in shaping our understanding of the world. Thus, we argue that well-grounded information theoretic principles can account for people’s divergent moral reactions to likely and unlikely events. 
-
-In some contexts, it is clearly adaptive that the violation of our expectations would direct our attention to the events and situations about which our understanding is most in need of revision [@Rescorla1972]. For instance, an act of terrorism in a peaceful nation might be less expected because of our beliefs about the effectiveness of security forces, the stability of national relationships, and positive relationships among people groups in that nation. Therefore, a surprising act of terrorism casts doubt on our deeper understanding of the geopolitical situation, and thereby leads us to suspect similar acts are more likely to occur in the future. 
-
-Yet, however well-grounded the underlying principles, there is a clear moral danger whenever expectations influence our moral concerns. In particular, these effects pose a significant threat when considering our reactions to humanitarian challenges brought on by poverty or regional instability. In these cases, the influence of expectations on moral evaluations threatens to impose vicious and morally pernicious cycles. For instance, people living in geo-politically unstable regions or in the developing world are often those who are most affected by terrorism, famine, and natural disasters, and are the very people in greatest need of assistance and concern from the world at-large. However, for precisely these reasons, it is often unsurprising when harm befalls people living in these circumstances. Thus the influence of expectations on moral evaluations threatens to reduce observer's concern for these victims most in need, making people less likely to donate time or money to aid victims, or to take political action to prevent further harms. The present research identifies this potentially pernicious moral bias and grounds it in information theoretic principles. Hopefully, by further understanding these cognitive dynamics, psychologists and policymakers can begin to find ways to reduce or counteract people's tendency to ignore the plight of those in most need of attention.
-
-# Materials and Methods {#materials-and-methods .unnumbered}
+# Study Overview
 
 We conducted two preregistered studies examining the role of expectations in moral evaluations (https://osf.io/86rsw/). Each study consisted of multiple trials where participants were presented brief descriptions of two events. Their task was to decide which of the two events was more upsetting. In Study 1, they made a two-alternative forced-choice, and in Study 2 they made their judgments using a five-point rating scale.  Both studies consisted of 16 experimental trials, five “equivalent” filler trials, and five “non-equivalent” filler trials.
+
+The design of these studies was chosen with special consideration to two theoretical points. First, the information-theoretic account we have described makes a solely directional prediction--all else being equal, more surprising events will elicit stronger reactions than less surprising events. Asking participants to compare two similar events allowed us to test this directional prediction. Second, it is the informativeness of events, determined by one's prior expectations of the event, that we predicted would shape evaluations. Thus, reasoners should not have to be induced to hold expectations experimentally [as in experiments by @Mellers1997], but instead their own prior beliefs should be sufficient to shape their expectations and affect their evaluations. For this reason, we manipulated the prior probability of events by describing two otherwise identical events occurring in different contexts. We explicitly chose contexts that differed in ways that could not be accounted for by construal-level explanations [@Trope2010] or explanations based on biases towards one’s ingroup [@Brewer1999]. This both allowed us to test the role of expectations based on world knowledge and provided a more naturalistic set of items.
 
 In experimental trials, the two events described identical harms, but one event was more expected and one more unexpected, as determined in a prior norming study (see SI).  For example, participants considered the following stimulus: 
 
@@ -444,36 +422,43 @@ In each of these events, the harm to the victim is the same (death) but one even
 
 Both studies also included “equivalent” filler trials. In these trials, the two events differed in trivial contextual details that we did not expect would affect participants’ judgments. These filler trials were meant to prevent participants from becoming explicitly aware of the structure of the experimental trials. Finally, both studies included “non-equivalent” filler trials, the two events differed substantially in the degree of harm suffered by a victim, so that one event was expected to be seen as considerably more upsetting than the other. These trials were included to allow participants a chance to use the extremes of the response scale and to reduce any task demands that might drive them to make artificially fine-grained distinctions when generating their responses. All experimental materials for these studies are available as Supporting Information at https://osf.io/86rsw/.
 
-## Exclusions {#exclusions .unnumbered}
+## Exclusions 
 
 In both studies, we excluded participants who failed to correctly answer attention-check questions or who indicated at the end of the study they had not taken their participation seriously. 
 
-## Data Analysis {#data-analysis .unnumbered}
+## Data Analysis 
 
 We analyzed our data by performing Bayesian estimation using the probabilistic programming language Stan [@Carpenter2017]. We tested our preregistered predictions by computing Bayes Factors (i.e. $BF_{01}$) using the hypothesis function in the R package brms. Bayes Factors express the ratio of the probability of data under the null hypothesis to the probability of the data under an alternative hypothesis. Larger Bayes Factors indicate that the data are more likely under the null hypothesis (i.e., that the intercept is not different from zero) than the alternative hypothesis (i.e., that the intercept is different from zero), and vice versa. As Bayes Factors can be influenced by prior choices [@Gelman2017], we performed prior robustness checks to confirm that our conclusions would not depend substantially on the specification of the priors. 
 
 To ensure the generality of our findings, we tested participants’ reactions to a variety of items and treated both participants and items as random effects throughout our analyses. The use of random effects over items allows us to consider these items as a sample from a larger population of possible items, and to generalize our findings to that wider population, much as we generalize from our sample of participants to the larger population [@Judd2012].
 
-## Study 1 {#study1 .unnumbered}
+## Study 1 
 
-### Participants {#s1-participants .unnumbered}
+### Participants 
 
 A total of `r n_distinct(d_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d$workerId)` passed attention checks and were included in the final analyses (`r gender_exp1$male` male, `r gender_exp1$female` female, median age = `r age_exp1` years old). All participants were paid $0.60 for their participation.
 
-### Materials and procedure {#s1-materials-procedure .unnumbered}
+### Materials and procedure
 
 Participants judged 16 experimental event-pairs and 10 equivalent filler event-pairs. On each trial (an example is shown above), participants were presented with the event-pair stimulus and had to judge which outcome was more upsetting in a two-alternative forced choice task. The two events were labeled “Outcome 1” and “Outcome 2” and the order, and whether Outcome 1 or 2 was the unexpected event, was randomized and counter-balanced. 
 
-### Results and discussion {#s1-results .unnumbered}
+### Results and discussion
 
 We predicted that people would judge that events where unexpected harm occurred were more upsetting than events where expected harm occurred. As indicated in Figure 1, we observed this trend. We estimated the magnitude of this effect by fitting a Bayesian logistic random effects model with participants’ responses as the dependent variable (1 = unexpected event is more upsetting; 0 = expected event is more upsetting) and random intercepts for item and subject, allowing us to generalize both to items and subjects we did not test. The intercept in this model represents the log-odds of selecting the unexpected event as being more upsetting. Thus, by examining the population-level intercept, we can test whether participants were biased toward selecting the unexpected event ($\beta$ > 0), the expected event ($\beta$ < 0), or were unbiased ($\beta$ = 0). We found that people were considerably more likely to think that unexpected events were more upsetting than events that were expected, Intercept = `r round(coefs_exp1$estimate, 3)`, 95% CI [`r round(coefs_exp1$lower, 3)`, `r round(coefs_exp1$upper, 3)`], $BF_{01}$ `r print_bf(bf_exp1)`.
 Figure 1 shows participants' responses broken-down by individual items. Participants' bias toward selecting the unexpected event as more upsetting was consistent across the 16 experimental items.
 
-## Study 2 {#study2 .unnumbered}
+(ref:fig1-caption)
+Probability with which participants chose the less expected event as more upsetting across trials in Study 1. As predicted, participants exhibited a robust bias toward choosing the less expected event as more upsetting across all items. Error bars represent 95% credible intervals calculated from the hierarchical logistic regression model. See Supporting Information for full description of items.
+
+```{r figure1, fig.cap="(ref:fig1-caption)"}
+knitr::include_graphics("fig1.eps") 
+```
+
+## Study 2
 
 In Study 1 we found that people’s judgments of events were biased by their expectations about those events. When forced to choose between two events, participants decided that unexpected events were more upsetting than expected events. In Study 2, we sought to test our hypothesis using a more conservative method: we provided participants with a more expressive response scale so that if they viewed the events under consideration as equally harmful, their responses could reflect their attitude.
 
-### Participants {#s2-participants .unnumbered}
+### Participants
 
 A total of `r n_distinct(d2_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d2$workerId)` passed attention checks and were included in the final analyses (`r gender_exp2$male` male, `r gender_exp2$female` female, median age = `r age_exp2` years old). All participants were paid $0.60 for their participation.
 
@@ -481,73 +466,45 @@ A total of `r n_distinct(d2_raw$workerId)` participants were recruited from Amaz
 
 The materials in Study 2 were the same as those in Study 1. As in Study 1, on each trial of the study, participants were presented with a pair of actions labeled “Outcome 1” and “Outcome 2” and were asked, “Which outcome seems more upsetting?” In Study 2 participants made their rating on a five-point scale (Outcome 1 seems more upsetting, Outcome 1 seems a little more upsetting, neither seems more upsetting than the other, Outcome 2 seems a little more upsetting, Outcome 2 seems more upsetting). 
 
-### Results and discussion {#s2-results .unnumbered}
+(ref:fig2-caption)
+Participants’ responses by item in Study 2. Upper: heatmap plot displaying probability of choosing each response on the 1 to 5 scale across items. Lower: marginal expected response across items, with 95% credible interval calculated from the ordinal regression model. Note the scale has been constrained to show relevant region of results. In both plots, a response of 3 indicates indifference, responses below 3 indicate a bias to choose the more expected event as more upsetting, and responses above 3 indicate a bias to choose the less expected event as more upsetting. Similar to Study 1, participants showed a robust bias toward choosing the less expected event as more upsetting. Trials are sorted by response to aid readability.
+
+```{r figure2, fig.cap="(ref:fig2-caption)", fig.align = "center", out.width = "\\textwidth", fig.pos = "!h"}
+# plot(arrangeGrob(g))
+knitr::include_graphics("fig2.eps") 
+```
+
+### Results and discussion
 
 We predicted that participants would evaluate unexpected events as more upsetting than expected events. We estimated the magnitude of this effect by fitting a cumulative (ordinal) random effects model with participants’ scale responses as the dependent variable (1 to 5) and random intercepts for item and subject. This model produces four intercept coefficients, representing the cumulative log-odds of responses at each scale point or lower. For instance, the second coefficient represents the log-odds participants chose a 2 ("outcome 2 seems slightly more upsetting") or lower on the scale. Similarly, the third intercept coefficient represents the log-odds participants chose a 3 or lower on the scale. To examine the predicted effect, we compared the third intercept coefficient (representing the log-odds of choosing 4 or higher) to the inverse of the second intercept coefficient (thereby representing the log-odds *not* choosing a 3 or higher--i.e., choosing a 1 or 2), allowing us to test whether participants were more likely to choose the expected or unexpected event as being more upsetting in cases where they did not choose the neither option. This analysis indicated that people were more likely to think that events that were unexpected were more upsetting than events that were expected, $BF_{01}$ `r print_bf(bf_exp2)` (see supporting information for full model results). We observed this difference consistently across nearly every item (Figure 2). 
 
 We note that the most common response was to view both events, which involve identical harms, as equivalently upsetting. However, across almost every item, participants showed a clear bias towards choosing unexpected events as more upsetting. Thus, Study 2 replicates the tendency to view unexpected moral events as more upsetting using a more conservative judgment task. 
 
-# Theoretical Formalization {#theory .unnumbered}
+### Discussion
 
-We construe event evaluation as a comparison between the state of affairs prior to an event and the state of affairs following the event. We represent the state of the world as a random variable, $X$. We assume $X$ is discrete, and that every realization $x$ represents some potential specific state of the world in all relevant aspects under consideration. An agent has some utility function $u$, that applies over the different realizations of $X$. Thus the expected utility of the present state of the world is:
+Consistent with our predictions, manipulating expectations shaped evaluations across a range of morally-significant events. We found that people viewed unexpected harmful events as more upsetting than expected harmful events, even when the harm a victim suffered was the same. For instance, people judged that a robbery at a clothing store (unexpected) was more upsetting than a robbery at a convenience store (expected). Furthermore, these differences were large, systematic, and robust. Although there was variability in the situations that elicited the largest differences, our statistical approach treated trial as a random effect (see Methods and Results), allowing us to generalize our conclusions to items we did not test [@Judd2012].
 
-\begin{equation*}
-E_X[u(X)] = \sum_x u(x)p(x)
-\end{equation*}
+We have argued that expectations shape our reactions to events because they determine how informative those events are in shaping our understanding of the world. Thus, we argue that well-grounded information theoretic principles can account for people’s divergent moral reactions to likely and unlikely events. 
 
-When we learn an event has occurred, we can represent this as an observation of another random variable, $S$. We can think of $S$ as a "signalling event" because it informs (signals) to us something about $X$ [this formalism follows @Arrow1996]. For simplicity, we treat $S$ as binary, either 1 or 0. Importantly, we assume there is a dependency between $S$ and $X$, so that observing $S$ informs our knowledge of $X$. For instance, reading a news report of a terror attack in Brussels informs us about the state of the world, telling us about what realizations of X are no longer possible (e.g., any wherein it was a peaceful day in Brussels) and which are more or less likely. Conditioned on $S$, the expected utility of the world is:
+In some contexts, it is clearly adaptive that the violation of our expectations would direct our attention to the events and situations about which our understanding is most in need of revision [@Rescorla1972]. For instance, an act of terrorism in a peaceful nation might be less expected because of our beliefs about the effectiveness of security forces, the stability of national relationships, and positive relationships among people groups in that nation. Therefore, a surprising act of terrorism casts doubt on our deeper understanding of the geopolitical situation, and thereby leads us to suspect similar acts are more likely to occur in the future. 
 
-\begin{equation*}
-E_{X|S}[u(X)] = \sum_x u(x)p(x|s)
-\end{equation*}
-
-We define the value assigned to the signalling event, $V(S)$, as:
-
-\begin{equation}
-V(S) = E_{X|S}[u(X)] - E_X[u(X)]
-\end{equation}
-
-Which we write more specifically as:
-
-\begin{equation}
-V(s=1) = \sum_x u(x)p(x|s=1) - \sum_x u(x)p(x)
-\end{equation}
-
-Our goal is to express this relation in terms of $p(S)$. First, we manipulate $E_X[u(X)]$ by applying the expectation of conditional expectation and some algebra.
-
-\begin{align*}
-\sum_x u(x)p(x) & = \sum_s u(x)p(x|s)p(s) \\
- &= \begin{aligned}[t]
-    & \sum_x u(x)p(x|s=1)p(s=1) - \\
-    & \quad \sum_x u(x)p(x|s=0)p(s=0) \end{aligned}\\
- &= \begin{aligned}[t]
-    & p(s=1)\sum_x u(x)p(x|s=1) -\\
-    & \quad p(s=0) \sum_x u(x)p(x|s=0) \end{aligned}\\
- &= \begin{aligned}[t]
-    & p(s=1)\sum_x u(x)p(x|s=1) - \\
-    & \quad (1-p(s=1)) \sum_x u(x)p(x|s=0) \end{aligned}\\
-\end{align*}
-
-Substituting this quantity back into Equation 2, we obtain:
-
-\begin{align*}
-V(s=1) = & \sum_x u(x)p(x|s=1) - \\ & p(s=1)\sum_x u(x)p(x|s=1) -\\ & (1-p(s=1)) \sum_x u(x)p(x|s=0)
-\end{align*}
-
-Finally, we factor the first two sums and combine them with the last sum to yield:
-
-\begin{equation}
-V(s=1)=(1-p(s=1))\sum_x u(x)p(x|s=1) - u(x)p(x|s=0)
-\end{equation}
-
-Under this formalization, the role of expectations in the evaluation of events does not depend on any further assumptions about the states of the world or the utility function to be applied over them. Instead, this conclusion depends on just two assumptions: first, that events are evaluated by comparing the utilities of the states of the world prior to and following the event; and second, that knowledge of those states of the world is uncertain.
-
-We have appealed to the informativeness of an event to illustrate intuitively how expectations should influence evaluations. More expected events carry less information, and thereby engender weaker reactions. Though our model of event evaluation is not an information-theoretic model in a direct sense, this interpretation still applies: the information carried by observing $S$ is a function of that observation’s prior probability, which we have in turn shown determines its evaluation.
-
-[^1]: It should be recognized that the result we obtain here bears a similarity to the “disappointment function” included in Mellers and colleagues’ [-@Mellers1997] Decision Affect Theory.
+Yet, however well-grounded the underlying principles, there is a clear moral danger whenever expectations influence our moral concerns. In particular, these effects pose a significant threat when considering our reactions to humanitarian challenges brought on by poverty or regional instability. In these cases, the influence of expectations on moral evaluations threatens to impose vicious and morally pernicious cycles. For instance, people living in geo-politically unstable regions or in the developing world are often those who are most affected by terrorism, famine, and natural disasters, and are the very people in greatest need of assistance and concern from the world at-large. However, for precisely these reasons, it is often unsurprising when harm befalls people living in these circumstances. Thus the influence of expectations on moral evaluations threatens to reduce observer's concern for these victims most in need, making people less likely to donate time or money to aid victims, or to take political action to prevent further harms. The present research identifies this potentially pernicious moral bias and grounds it in information theoretic principles. Hopefully, by further understanding these cognitive dynamics, psychologists and policymakers can begin to find ways to reduce or counteract people's tendency to ignore the plight of those in most need of attention.
 
 
-<!-- Leave these lines as they are at the end of your .Rmd file to ensure placement of methods & acknowledgements sections before the references-->
-\showmatmethods
-\showacknow
-\pnasbreak
+```{r render_appendix, include=FALSE}
+render_appendix("appendix.Rmd")
+```
+
+\newpage
+
+# References
+```{r create_r-references}
+r_refs(file = "r-references.bib")
+```
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id = "refs"></div>
+\endgroup

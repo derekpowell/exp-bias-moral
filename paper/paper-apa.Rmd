@@ -44,10 +44,9 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output:
-  papaja::apa6_pdf:
-    includes:
-      after_body: "appendix.tex"
+output: papaja::apa6_pdf
+    # includes:
+    #   after_body: "appendix.tex"
 ---
 
 ```{r setup, include = FALSE}
@@ -407,7 +406,7 @@ Our construal of event evaluation is as a comparison between states of the world
 V(S) = E_{X|S}[u(X)] - E_X[u(X)]
 \end{equation*}
 
-From this it can be shown that the value assigned to event $S$ is proportional to its prior probability (see Theoretical Formalization). Specifically, it is the difference in the expected utility under different values of $S$, weighted by the inverse of the prior probability of $S$. [^1]
+From this it can be shown that the value assigned to event $S$ is proportional to its prior probability (see Theoretical Formalization section in supplemental materials). Specifically, it is the difference in the expected utility under different values of $S$, weighted by the inverse of the prior probability of $S$. [^1]
 
 \begin{equation*}
 V(s=1)=(1-p(s=1))\sum_x u(x)p(x|s=1) - u(x)p(x|s=0)
@@ -417,7 +416,7 @@ This conclusion does not depend on the nature of the event in question nor on th
 
 Given the potentially fundamental role that expectations play in event evaluation, and the potentially serious moral biases that may result, we sought to test empirically whether people’s evaluations of morally harmful events are affected by their expectations about those events. We conducted two preregistered studies examining the role of expectations in moral evaluations. In both studies, participants were presented with a series of trials in which they read brief descriptions of two different events and were asked to indicate which of the two events seemed more upsetting. In these trials, the two events were highly similar, but were manipulated so that they differed in their perceived prior probabilities: one event was more expected and one more unexpected. 
 
-# Study Overview
+# General Methods
 
 We conducted two preregistered studies examining the role of expectations in moral evaluations (https://osf.io/86rsw/). Each study consisted of multiple trials where participants were presented brief descriptions of two events. Their task was to decide which of the two events was more upsetting. In Study 1, they made a two-alternative forced-choice, and in Study 2 they made their judgments using a five-point rating scale.  Both studies consisted of 16 experimental trials, five “equivalent” filler trials, and five “non-equivalent” filler trials.
 
@@ -447,7 +446,7 @@ To ensure the generality of our findings, we tested participants’ reactions to
 
 ### Participants 
 
-A total of `r n_distinct(d_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d$workerId)` passed attention checks and were included in the final analyses (`r gender_exp1$male` male, `r gender_exp1$female` female, median age = `r age_exp1` years old). All participants were paid $0.60 for their participation.
+In light of meta-meta analyses of effect sizes in social psychology [@Richard2003], we sought to achieve 80% power to detect an effect of cohen's D of .2, requiring approximately 200 participants. Anticipating losing some participants to attention checks or other forms of attrition, a total of `r n_distinct(d_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d$workerId)` passed attention checks and were included in the final analyses (`r gender_exp1$male` male, `r gender_exp1$female` female, median age = `r age_exp1` years old). All participants were paid $0.60 for their participation.
 
 ### Materials and procedure
 
@@ -466,11 +465,11 @@ knitr::include_graphics("fig1.eps")
 
 ## Study 2
 
-In Study 1 we found that people’s judgments of events were biased by their expectations about those events. When forced to choose between two events, participants decided that unexpected events were more upsetting than expected events. In Study 2, we sought to test our hypothesis using a more conservative method: we provided participants with a more expressive response scale so that if they viewed the events under consideration as equally harmful, their responses could reflect their attitude.
+In Study 1 we found that people’s judgments of events were biased by their expectations about those events. When forced to choose between two events, participants decided that unexpected events were more upsetting than expected events. In Study 2, we sought to test our hypothesis using a more conservative method: we provided participants with a more expressive response scale so that if they viewed the events under consideration as equally harmful, their responses could reflect their attitude. 
 
 ### Participants
 
-A total of `r n_distinct(d2_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d2$workerId)` passed attention checks and were included in the final analyses (`r gender_exp2$male` male, `r gender_exp2$female` female, median age = `r age_exp2` years old). All participants were paid $0.60 for their participation.
+Due to the nature of this task, we anticipated the effects in this study might be smaller than in Study 1. Consequently, we approximately doubled our sample size to ensure adequate power to detect any effect of interest. A total of `r n_distinct(d2_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d2$workerId)` passed attention checks and were included in the final analyses (`r gender_exp2$male` male, `r gender_exp2$female` female, median age = `r age_exp2` years old). All participants were paid $0.60 for their participation.
 
 ### Materials and procedure {#s2-materials-procedure .unnumbered}
 
@@ -506,8 +505,7 @@ tidy(fit_exp2rand) %>%
             align = c("r","c","c","c"))
 ```
 
-
-### Discussion
+# Discussion
 
 Consistent with our predictions, manipulating expectations shaped evaluations across a range of morally-significant events. We found that people viewed unexpected harmful events as more upsetting than expected harmful events, even when the harm a victim suffered was the same. For instance, people judged that a robbery at a clothing store (unexpected) was more upsetting than a robbery at a convenience store (expected). Furthermore, these differences were large, systematic, and robust. Although there was variability in the situations that elicited the largest differences, our statistical approach treated trial as a random effect (see Methods and Results), allowing us to generalize our conclusions to items we did not test [@Judd2012].
 
@@ -518,7 +516,7 @@ In some contexts, it is clearly adaptive that the violation of our expectations 
 Yet, however well-grounded the underlying principles, there is a clear moral danger whenever expectations influence our moral concerns. In particular, these effects pose a significant threat when considering our reactions to humanitarian challenges brought on by poverty or regional instability. In these cases, the influence of expectations on moral evaluations threatens to impose vicious and morally pernicious cycles. For instance, people living in geo-politically unstable regions or in the developing world are often those who are most affected by terrorism, famine, and natural disasters, and are the very people in greatest need of assistance and concern from the world at-large. However, for precisely these reasons, it is often unsurprising when harm befalls people living in these circumstances. Thus the influence of expectations on moral evaluations threatens to reduce observer's concern for these victims most in need, making people less likely to donate time or money to aid victims, or to take political action to prevent further harms. The present research identifies this potentially pernicious moral bias and grounds it in information theoretic principles. Hopefully, by further understanding these cognitive dynamics, psychologists and policymakers can begin to find ways to reduce or counteract people's tendency to ignore the plight of those in most need of attention.
 
 ```{r render_appendix, include=FALSE}
-render_appendix("appendix.Rmd")
+# render_appendix("appendix.Rmd")
 ```
 
 \newpage

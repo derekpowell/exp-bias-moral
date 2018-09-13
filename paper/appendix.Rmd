@@ -1,18 +1,6 @@
 # Theoretical Formalization
 
-We construe event evaluation as a comparison between the state of affairs prior to an event and the state of affairs following the event. We represent the state of the world as a random variable, $X$. We assume $X$ is discrete, and that every realization $x$ represents some potential specific state of the world in all relevant aspects under consideration. An agent has some utility function $u$, that applies over the different realizations of $X$. Thus the expected utility of the present state of the world is:
-
-\begin{equation*}
-E_X[u(X)] = \sum_x u(x)p(x)
-\end{equation*}
-
-When we learn an event has occurred, we can represent this as an observation of another random variable, $S$. We can think of $S$ as a "signalling event" because it informs (signals) to us something about $X$ [this formalism follows @Arrow1996]. For simplicity, we treat $S$ as binary, either 1 or 0. Importantly, we assume there is a dependency between $S$ and $X$, so that observing $S$ informs our knowledge of $X$. For instance, reading a news report of a terror attack in Brussels informs us about the state of the world, telling us about what realizations of X are no longer possible (e.g., any wherein it was a peaceful day in Brussels) and which are more or less likely. Conditioned on $S$, the expected utility of the world is:
-
-\begin{equation*}
-E_{X|S}[u(X)] = \sum_x u(x)p(x|s)
-\end{equation*}
-
-We define the value assigned to the signalling event, $V(S)$, as:
+We defined the value assigned to the signalling event, $V(S)$, as:
 
 \begin{equation}
 V(S) = E_{X|S}[u(X)] - E_X[u(X)]
@@ -50,9 +38,3 @@ Finally, we factor the first two sums and combine them with the last sum to yiel
 \begin{equation}
 V(s=1)=(1-p(s=1))\sum_x u(x)p(x|s=1) - u(x)p(x|s=0)
 \end{equation}
-
-Under this formalization, the role of expectations in the evaluation of events does not depend on any further assumptions about the states of the world or the utility function to be applied over them. Instead, this conclusion depends on just two assumptions: first, that events are evaluated by comparing the utilities of the states of the world prior to and following the event; and second, that knowledge of those states of the world is uncertain.
-
-We have appealed to the informativeness of an event to illustrate intuitively how expectations should influence evaluations. More expected events carry less information, and thereby engender weaker reactions. Though our model of event evaluation is not an information-theoretic model in a direct sense, this interpretation still applies: the information carried by observing $S$ is a function of that observation’s prior probability, which we have in turn shown determines its evaluation.
-
-[^1]: It should be recognized that the result we obtain here bears a similarity to the “disappointment function” included in Mellers and colleagues’ [-@Mellers1997] Decision Affect Theory.

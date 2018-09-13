@@ -25,12 +25,12 @@ authornote: |
   Both authors jointly conceived of the project and theory, designed and conducted experiments, and analyzed results. D.P. developed the formal aspects of the theory. 
 
 abstract: |
-  When we learn of tragic events--a violent killing or a terrorist attack--we are mournful and often driven to action. But responses to these events can differ substantially depending on the context in which they occur. When tragedy takes us by surprise, we are shocked and outraged, but when it strikes in unstable regions or rough neighborhoods, we are often resigned to feel that “these things happen.” Here we explain the role that expectations seem to play in moral evaluation by modeling evaluations as the comparison of the state of the world before and after an event. According to this theory, expectations influence evaluations through information-theoretic principles: less expected events do more to inform us about the state of the world than do more expected events. Consistent with this theory, in two preregistered studies we found that people’s judgments of morally-significant events were affected by the prior probability of that event. People were more upset about an event that was unexpected (e.g., a robbery at a clothing store) than an event that was more more probable (e.g., a robbery at a convenience store). This bias threatens to impose a pernicious cycle: People living in poverty, geo-politically unstable regions, and other dangerous circumstances have the greatest need for assistance and concern. However, for these very reasons, it is often unsurprising when they are harmed. Consequently, the influence of expectations on moral evaluations threatens to reduce observers’ concern for those most in need.
+  People’s expectations play an important role in their reactions to events. There is often disappointment when events fail to meet expectations and a special thrill to having one’s expectations exceeded. We propose that expectations influence evaluations through information-theoretic principles: less expected events do more to inform us about the state of the world than do more expected events. An implication of this proposal is that people may have inappropriately muted responses to morally significant but expected events. In two preregistered experiments, we found that people’s judgments of morally-significant events were affected by the likelihood of that event. People were more upset about events that were unexpected (e.g., a robbery at a clothing store) than events  that were more expected (e.g., a robbery at a convenience store). We argue that this bias has pernicious moral consequences, including leading to reduced concern for victims in most need of help. 
   
   <!-- https://tinyurl.com/ybremelq -->
   
 keywords          : "Evaluation; Moral judgment; Information theory"
-wordcount         : "X"
+wordcount         : "1911"
 
 bibliography      : ["wiw-biblio.bib", "r-references.bib"]
 
@@ -44,9 +44,10 @@ draft             : no
 
 documentclass     : "apa6"
 classoption       : "man"
-output: papaja::apa6_pdf
-    # includes:
-    #   after_body: "appendix.tex"
+output: 
+  papaja::apa6_pdf:
+    includes:
+      after_body: "appendix.tex"
 ---
 
 ```{r setup, include = FALSE}
@@ -446,11 +447,11 @@ To ensure the generality of our findings, we tested participants’ reactions to
 
 ### Participants 
 
-In light of meta-meta analyses of effect sizes in social psychology [@Richard2003], we sought to achieve 80% power to detect an effect of cohen's D of .2, requiring approximately 200 participants. Anticipating losing some participants to attention checks or other forms of attrition, a total of `r n_distinct(d_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d$workerId)` passed attention checks and were included in the final analyses (`r gender_exp1$male` male, `r gender_exp1$female` female, median age = `r age_exp1` years old). All participants were paid $0.60 for their participation.
+In light of meta-meta analyses of effect sizes in social psychology [@Richard2003], we sought to achieve 80% power to detect an effect of cohen's _d_ of .2, requiring approximately 200 participants. As we anticipated excluding participants who failed attention checks, a total of `r n_distinct(d_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d$workerId)` passed attention checks and were included in the final analyses (`r gender_exp1$male` male, `r gender_exp1$female` female, median age = `r age_exp1` years old). All participants were paid $0.60 for their participation.
 
 ### Materials and procedure
 
-Participants judged 16 experimental event-pairs and 10 equivalent filler event-pairs. On each trial (an example is shown above), participants were presented with the event-pair stimulus and had to judge which outcome was more upsetting in a two-alternative forced choice task. The two events were labeled “Outcome 1” and “Outcome 2” and the order, and whether Outcome 1 or 2 was the unexpected event, was randomized and counter-balanced. 
+Participants judged 16 experimental event-pairs and 10 equivalent filler event-pairs. On each trial (an example is shown above), participants were presented with the event-pair stimulus and had to judge which outcome was more upsetting in a two-alternative forced choice task. The two events were labeled “Outcome 1” and “Outcome 2” and the order, and whether Outcome 1 or 2 was the unexpected event, was randomized and counterbalanced. 
 
 ### Results and discussion
 
@@ -485,10 +486,6 @@ knitr::include_graphics("fig2.eps")
 
 ### Results and discussion
 
-We predicted that participants would evaluate unexpected events as more upsetting than expected events. We estimated the magnitude of this effect by fitting a cumulative (ordinal) random effects model with participants’ scale responses as the dependent variable (1 to 5) and random intercepts for item and subject. This model produces four intercept coefficients, representing the cumulative log-odds of responses at each scale point or lower (summarized in Table 1). For instance, the second coefficient represents the log-odds participants chose a 2 ("outcome 2 seems slightly more upsetting") or lower on the scale. Similarly, the third intercept coefficient represents the log-odds participants chose a 3 or lower on the scale. To examine the predicted effect, we compared the third intercept coefficient (representing the log-odds of choosing 4 or higher) to the inverse of the second intercept coefficient (thereby representing the log-odds *not* choosing a 3 or higher--i.e., choosing a 1 or 2), allowing us to test whether participants were more likely to choose the expected or unexpected event as being more upsetting in cases where they did not choose the neither option. This analysis indicated that people were more likely to think that events that were unexpected were more upsetting than events that were expected, $BF_{01}$ `r print_bf(bf_exp2)`. We observed this difference consistently across nearly every item (Figure 2). 
-
-We note that the most common response was to view both events, which involve identical harms, as equivalently upsetting. However, across almost every item, participants showed a clear bias towards choosing unexpected events as more upsetting. Thus, Study 2 replicates the tendency to view unexpected moral events as more upsetting using a more conservative judgment task. 
-
 ```{r, results="asis"}
 tidy(fit_exp2rand) %>%
   filter(grepl("b_Intercept", term), !grepl("prior", term)) %>%
@@ -505,18 +502,20 @@ tidy(fit_exp2rand) %>%
             align = c("r","c","c","c"))
 ```
 
+We predicted that participants would evaluate unexpected events as more upsetting than expected events. We estimated the magnitude of this effect by fitting a cumulative (ordinal) random effects model with participants’ scale responses as the dependent variable (1 to 5) and random intercepts for item and subject. This model produces four intercept coefficients, representing the cumulative log-odds of responses at each scale point or lower (summarized in Table 1). For instance, the second coefficient represents the log-odds participants chose a 2 ("outcome 2 seems slightly more upsetting") or lower on the scale. Similarly, the third intercept coefficient represents the log-odds participants chose a 3 or lower on the scale. To examine the predicted effect, we compared the third intercept coefficient (representing the log-odds of choosing 4 or higher) to the inverse of the second intercept coefficient (thereby representing the log-odds *not* choosing a 3 or higher--i.e., choosing a 1 or 2), allowing us to test whether participants were more likely to choose the expected or unexpected event as being more upsetting in cases where they did not choose the neither option. This analysis indicated that people were more likely to think that events that were unexpected were more upsetting than events that were expected, $BF_{01}$ `r print_bf(bf_exp2)`. We observed this difference consistently across nearly every item (Figure 2). 
+
+We note that the most common response was to view both events, which involve identical harms, as equivalently upsetting. However, across almost every item, participants showed a clear bias towards choosing unexpected events as more upsetting. Thus, Study 2 replicates the tendency to view unexpected moral events as more upsetting using a more conservative judgment task. 
+
 # Discussion
 
 Consistent with our predictions, manipulating expectations shaped evaluations across a range of morally-significant events. We found that people viewed unexpected harmful events as more upsetting than expected harmful events, even when the harm a victim suffered was the same. For instance, people judged that a robbery at a clothing store (unexpected) was more upsetting than a robbery at a convenience store (expected). Furthermore, these differences were large, systematic, and robust. Although there was variability in the situations that elicited the largest differences, our statistical approach treated trial as a random effect (see Methods and Results), allowing us to generalize our conclusions to items we did not test [@Judd2012].
 
-We have argued that expectations shape our reactions to events because they determine how informative those events are in shaping our understanding of the world. Thus, we argue that well-grounded information theoretic principles can account for people’s divergent moral reactions to likely and unlikely events. 
-
-In some contexts, it is clearly adaptive that the violation of our expectations would direct our attention to the events and situations about which our understanding is most in need of revision [@Rescorla1972]. For instance, an act of terrorism in a peaceful nation might be less expected because of our beliefs about the effectiveness of security forces, the stability of national relationships, and positive relationships among people groups in that nation. Therefore, a surprising act of terrorism casts doubt on our deeper understanding of the geopolitical situation, and thereby leads us to suspect similar acts are more likely to occur in the future. 
+We have argued that expectations shape our reactions to events because they determine how informative those events are in shaping our understanding of the world. Thus, we argue that well-grounded information theoretic principles can account for people’s divergent moral reactions to likely and unlikely events. In some contexts, it is clearly adaptive that the violation of our expectations would direct our attention to the events and situations about which our understanding is most in need of revision [@Rescorla1972]. For instance, an act of terrorism in a peaceful nation might be less expected because of our beliefs about the effectiveness of security forces, the stability of national relationships, and positive relationships among people groups in that nation. Therefore, a surprising act of terrorism casts doubt on our deeper understanding of the geopolitical situation, and thereby leads us to suspect similar acts are more likely to occur in the future. 
 
 Yet, however well-grounded the underlying principles, there is a clear moral danger whenever expectations influence our moral concerns. In particular, these effects pose a significant threat when considering our reactions to humanitarian challenges brought on by poverty or regional instability. In these cases, the influence of expectations on moral evaluations threatens to impose vicious and morally pernicious cycles. For instance, people living in geo-politically unstable regions or in the developing world are often those who are most affected by terrorism, famine, and natural disasters, and are the very people in greatest need of assistance and concern from the world at-large. However, for precisely these reasons, it is often unsurprising when harm befalls people living in these circumstances. Thus the influence of expectations on moral evaluations threatens to reduce observer's concern for these victims most in need, making people less likely to donate time or money to aid victims, or to take political action to prevent further harms. The present research identifies this potentially pernicious moral bias and grounds it in information theoretic principles. Hopefully, by further understanding these cognitive dynamics, psychologists and policymakers can begin to find ways to reduce or counteract people's tendency to ignore the plight of those in most need of attention.
 
 ```{r render_appendix, include=FALSE}
-# render_appendix("appendix.Rmd")
+render_appendix("appendix.Rmd")
 ```
 
 \newpage

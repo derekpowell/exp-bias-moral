@@ -30,7 +30,7 @@ abstract: |
   <!-- https://tinyurl.com/ybremelq -->
   
 keywords          : "Evaluation; Moral judgment; Information theory"
-wordcount         : "1911"
+wordcount         : "3898 (total), 1988 (excluding methods and results)"
 
 bibliography      : ["wiw-biblio.bib", "r-references.bib"]
 
@@ -407,7 +407,7 @@ Our construal of event evaluation is as a comparison between states of the world
 V(S) = E_{X|S}[u(X)] - E_X[u(X)]
 \end{equation*}
 
-From this it can be shown that the value assigned to event $S$ is proportional to its prior probability (see Theoretical Formalization section in supplemental materials). Specifically, it is the difference in the expected utility under different values of $S$, weighted by the inverse of the prior probability of $S$. [^1]
+From this it can be shown that the value assigned to event $S$ is proportional to its prior probability (see Appendix). Specifically, it is the difference in the expected utility under different values of $S$, weighted by the inverse of the prior probability of $S$. [^1]
 
 \begin{equation*}
 V(s=1)=(1-p(s=1))\sum_x u(x)p(x|s=1) - u(x)p(x|s=0)
@@ -417,7 +417,7 @@ This conclusion does not depend on the nature of the event in question nor on th
 
 Given the potentially fundamental role that expectations play in event evaluation, and the potentially serious moral biases that may result, we sought to test empirically whether people’s evaluations of morally harmful events are affected by their expectations about those events. We conducted two preregistered studies examining the role of expectations in moral evaluations. In both studies, participants were presented with a series of trials in which they read brief descriptions of two different events and were asked to indicate which of the two events seemed more upsetting. In these trials, the two events were highly similar, but were manipulated so that they differed in their perceived prior probabilities: one event was more expected and one more unexpected. 
 
-# General Methods
+# General Method
 
 We conducted two preregistered studies examining the role of expectations in moral evaluations (https://osf.io/86rsw/). Each study consisted of multiple trials where participants were presented brief descriptions of two events. Their task was to decide which of the two events was more upsetting. In Study 1, they made a two-alternative forced-choice, and in Study 2 they made their judgments using a five-point rating scale.  Both studies consisted of 16 experimental trials, five “equivalent” filler trials, and five “non-equivalent” filler trials.
 
@@ -443,7 +443,9 @@ All analyses were carried out in `r my_citations`. We analyzed our data by perfo
 
 To ensure the generality of our findings, we tested participants’ reactions to a variety of items and treated both participants and items as random effects throughout our analyses. The use of random effects over items allows us to consider these items as a sample from a larger population of possible items, and to generalize our findings to that wider population, much as we generalize from our sample of participants to the larger population [@Judd2012].
 
-## Study 1 
+# Study 1   
+
+## Method
 
 ### Participants 
 
@@ -453,7 +455,7 @@ In light of meta-meta analyses of effect sizes in social psychology [@Richard200
 
 Participants judged 16 experimental event-pairs and 10 equivalent filler event-pairs. On each trial (an example is shown above), participants were presented with the event-pair stimulus and had to judge which outcome was more upsetting in a two-alternative forced choice task. The two events were labeled “Outcome 1” and “Outcome 2” and the order, and whether Outcome 1 or 2 was the unexpected event, was randomized and counterbalanced. 
 
-### Results and discussion
+## Results
 
 We predicted that people would judge that events where unexpected harm occurred were more upsetting than events where expected harm occurred. As indicated in Figure 1, we observed this trend. We estimated the magnitude of this effect by fitting a Bayesian logistic random effects model with participants’ responses as the dependent variable (1 = unexpected event is more upsetting; 0 = expected event is more upsetting) and random intercepts for item and subject, allowing us to generalize both to items and subjects we did not test. The intercept in this model represents the log-odds of selecting the unexpected event as being more upsetting. Thus, by examining the population-level intercept, we can test whether participants were biased toward selecting the unexpected event ($\beta$ > 0), the expected event ($\beta$ < 0), or were unbiased ($\beta$ = 0). We found that people were considerably more likely to think that unexpected events were more upsetting than events that were expected, Intercept = `r round(coefs_exp1$estimate, 3)`, 95% CI [`r round(coefs_exp1$lower, 3)`, `r round(coefs_exp1$upper, 3)`], $BF_{01}$ `r print_bf(bf_exp1)`. Figure 1 shows participants' responses broken-down by individual items. Participants' bias toward selecting the unexpected event as more upsetting was consistent across the 16 experimental items.
 
@@ -464,15 +466,16 @@ Probability with which participants chose the less expected event as more upsett
 knitr::include_graphics("fig1.eps") 
 ```
 
-## Study 2
+# Study 2
 
 In Study 1 we found that people’s judgments of events were biased by their expectations about those events. When forced to choose between two events, participants decided that unexpected events were more upsetting than expected events. In Study 2, we sought to test our hypothesis using a more conservative method: we provided participants with a more expressive response scale so that if they viewed the events under consideration as equally harmful, their responses could reflect their attitude. 
+## Method
 
-### Participants
+## Participants
 
 Due to the nature of this task, we anticipated the effects in this study might be smaller than in Study 1. Consequently, we approximately doubled our sample size to ensure adequate power to detect any effect of interest. A total of `r n_distinct(d2_raw$workerId)` participants were recruited from Amazon’s Mechanical Turk work distribution website (mTurk). Of these, `r n_distinct(d2$workerId)` passed attention checks and were included in the final analyses (`r gender_exp2$male` male, `r gender_exp2$female` female, median age = `r age_exp2` years old). All participants were paid $0.60 for their participation.
 
-### Materials and procedure {#s2-materials-procedure .unnumbered}
+### Materials and procedure
 
 The materials in Study 2 were the same as those in Study 1. As in Study 1, on each trial of the study, participants were presented with a pair of actions labeled “Outcome 1” and “Outcome 2” and were asked, “Which outcome seems more upsetting?” In Study 2 participants made their rating on a five-point scale (Outcome 1 seems more upsetting, Outcome 1 seems a little more upsetting, neither seems more upsetting than the other, Outcome 2 seems a little more upsetting, Outcome 2 seems more upsetting). 
 
@@ -484,7 +487,7 @@ Participants’ responses by item in Study 2. Upper: heatmap plot displaying pro
 knitr::include_graphics("fig2.eps") 
 ```
 
-### Results and discussion
+## Results
 
 ```{r, results="asis"}
 tidy(fit_exp2rand) %>%
